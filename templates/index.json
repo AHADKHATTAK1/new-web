@@ -14,25 +14,25 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Welcome to Our Store",
+            "heading": "Premium Laptops & Accessories",
             "heading_size": "h0"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "Discover amazing products at unbeatable prices",
+            "text": "High-performance tech for professionals and gamers.",
             "text_style": "body"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop Now",
-            "button_link_1": "/collections/all",
+            "button_label_1": "View Laptops",
+            "button_link_1": "/collections/gaming-laptops",
             "button_style_secondary_1": false,
-            "button_label_2": "Learn More",
-            "button_link_2": "/pages/about",
+            "button_label_2": "Accessories",
+            "button_link_2": "/collections/mice-keyboards",
             "button_style_secondary_2": true
           }
         }
@@ -50,32 +50,32 @@
           "type": "badge",
           "settings": {
             "icon": "🚚",
-            "heading": "Free Shipping",
-            "text": "On orders over $50"
+            "heading": "Express Shipping",
+            "text": "Fast delivery on all tech"
           }
         },
         "badge-2": {
           "type": "badge",
           "settings": {
-            "icon": "🔒",
-            "heading": "Secure Payment",
-            "text": "100% secure transactions"
+            "icon": "🛠️",
+            "heading": "Tech Support",
+            "text": "Expert assistance 24/7"
           }
         },
         "badge-3": {
           "type": "badge",
           "settings": {
-            "icon": "↩️",
-            "heading": "Easy Returns",
-            "text": "30-day return policy"
+            "icon": "🛡️",
+            "heading": "Official Warranty",
+            "text": "Genuine brand protection"
           }
         },
         "badge-4": {
           "type": "badge",
           "settings": {
-            "icon": "⭐",
-            "heading": "Top Quality",
-            "text": "Premium products only"
+            "icon": "💳",
+            "heading": "Easy Installments",
+            "text": "Buy now, pay later"
           }
         }
       },
@@ -86,7 +86,7 @@
         "badge-4"
       ],
       "settings": {
-        "heading": "Why Shop With Us",
+        "heading": "Why Choose NWID",
         "heading_size": "h1",
         "color_scheme": "scheme-2",
         "padding_top": 0,
@@ -96,14 +96,14 @@
     "flash-deals": {
       "type": "flash-deals",
       "settings": {
-        "heading": "⚡ Flash Deals - Limited Time!",
-        "description": "Hurry! These deals won't last long",
+        "heading": "⚡ Tech Mega Sale!",
+        "description": "Don't miss out on high-demand laptops",
         "collection": "",
         "products_to_show": 8,
         "columns_desktop": 4,
         "columns_mobile": 2,
         "enable_countdown": true,
-        "countdown_end_date": "2026-01-31",
+        "countdown_end_date": "2026-06-30",
         "countdown_end_time": "23:59",
         "show_view_all": true,
         "color_scheme": "scheme-1",
@@ -114,11 +114,13 @@
     "top-selling": {
       "type": "top-selling-products",
       "settings": {
-        "heading": "Top Selling Products",
+        "heading": "Featured Laptops",
         "show_featured_promo": true,
-        "promo_title": "Summer Sale",
-        "promo_subtitle": "Up to 50% Off",
-        "promo_link": "/collections/all"
+        "promo_title": "Gaming Excellence",
+        "promo_subtitle": "New RTX Series In Stock",
+        "promo_link": "/collections/gaming-laptops",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "promotional-banners": {
@@ -127,33 +129,33 @@
         "promo-1": {
           "type": "promo_item",
           "settings": {
-            "badge": "New Arrival",
-            "title": "Latest Collection 2026",
-            "text": "Discover the newest trends",
-            "button_label": "Shop Now",
-            "button_link": "/collections/new-arrivals",
+            "badge": "Power",
+            "title": "Business Workstations",
+            "text": "Productivity redefined",
+            "button_label": "Shop Workstations",
+            "button_link": "/collections/business-laptops",
             "color_scheme": "scheme-1"
           }
         },
         "promo-2": {
           "type": "promo_item",
           "settings": {
-            "badge": "Best Seller",
-            "title": "Customer Favorites",
-            "text": "Most loved products",
-            "button_label": "View All",
-            "button_link": "/collections/bestsellers",
+            "badge": "Portability",
+            "title": "Ultra-Slim Laptops",
+            "text": "Tech that moves with you",
+            "button_label": "View Slim",
+            "button_link": "/collections/student-laptops",
             "color_scheme": "scheme-2"
           }
         },
         "promo-3": {
           "type": "promo_item",
           "settings": {
-            "badge": "Sale",
-            "title": "Special Offers",
-            "text": "Up to 50% off",
-            "button_label": "Get Deal",
-            "button_link": "/collections/sale",
+            "badge": "Essentials",
+            "title": "Accessories Pack",
+            "text": "Complete your setup",
+            "button_label": "Get Ready",
+            "button_link": "/collections/mice-keyboards",
             "color_scheme": "scheme-1"
           }
         }
@@ -164,7 +166,7 @@
         "promo-3"
       ],
       "settings": {
-        "title": "Shop by Category",
+        "title": "Explore by Category",
         "heading_size": "h1",
         "columns_desktop": 3,
         "columns_mobile": 1,
@@ -176,9 +178,11 @@
     "trending": {
       "type": "trending-products",
       "settings": {
-        "heading": "Trending Products",
+        "heading": "Trending Gear",
         "show_featured_banner": true,
-        "banner_text": "Exclusive Deals On Top Brands"
+        "banner_text": "Top Rated by Tech Communities",
+        "padding_top": 0,
+        "padding_bottom": 0
       },
       "blocks": {
         "tab-1": {
@@ -190,7 +194,7 @@
         "tab-2": {
           "type": "category_tab",
           "settings": {
-            "tab_title": "Mobiles"
+            "tab_title": "Laptops"
           }
         },
         "tab-3": {
@@ -209,13 +213,13 @@
     "product-tabs": {
       "type": "product-tabs",
       "settings": {
-        "heading": "Our Products",
+        "heading": "Our Tech Collection",
         "collection_1": "",
         "collection_2": "",
         "collection_3": "",
-        "tab_label_1": "New Arrivals",
-        "tab_label_2": "Best Sellers",
-        "tab_label_3": "On Sale",
+        "tab_label_1": "Latest Releases",
+        "tab_label_2": "Top Performance",
+        "tab_label_3": "Best Value",
         "limit": 8,
         "columns": 4,
         "color_scheme": "scheme-1",

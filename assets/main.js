@@ -21,7 +21,7 @@
     // ============== Mobile Menu Sidebar & Offcanvas Js End ========
 
     // ============== Mobile Nav Menu Dropdown Js Start =======================
-    
+
 
     $('.has-submenu').on('click', function () {
       var thisItem = $(this);
@@ -132,7 +132,7 @@
     // ========================== Category Dropdown Responsive Js Start =================================
     $('.responsive-dropdown .has-submenus-submenu').on('click', function () {
 
-      
+
       if ($(window).width() < 992) {
         if ($(this).hasClass('active')) {
           $(this).removeClass('active');
@@ -287,7 +287,6 @@
       slidesToScroll: 1,
       autoplay: false,
       autoplaySpeed: 4000,
-      speed: 1500,
       dots: false,
       pauseOnHover: true,
       arrows: true,
@@ -438,7 +437,6 @@
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 4000,
-      speed: 1500,
       dots: true,
       pauseOnHover: true,
       arrows: true,

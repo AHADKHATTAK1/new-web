@@ -1,7 +1,7 @@
-# Electronics Store - Shopify Theme
+# NWID Laptop Store - Shopify Theme
 
 ## Overview
-A modern, feature-rich Shopify theme for electronics and e-commerce stores. Built from a professional HTML template and converted to Shopify's Liquid templating system.
+A modern, feature-rich Shopify theme for high-end laptops, desktops, and tech accessories. Built for **NWID (Naveed Wajahat Building Company)**, this theme offers a premium, professional shopping experience with zero-spacing layout and optimized performance.
 
 ## Features
 
@@ -18,30 +18,30 @@ A modern, feature-rich Shopify theme for electronics and e-commerce stores. Buil
 - Toast notifications for actions
 
 ### 🎨 **Design**
-- Modern, clean interface
+- Modern, clean interface tailored for Tech Retail
 - Responsive on all devices
 - Smooth hover effects on product cards
 - Image zoom on product pages
 - Category sidebar navigation
-- Countdown timers for deals
+- Zero-spacing layout for a flush, premium look
 
 ### 📦 **Product Display**
-- Enhanced product cards with quick actions
+- Enhanced product cards for Laptops and Components
 - Product image hover effect (second image)
-- Sale badges and sold-out indicators
+- Sale badges and "New Tech" indicators
 - Star ratings support
-- Vendor display
+- Vendor display (Dell, HP, Apple, etc.)
 
 ### 🏠 **Homepage Sections**
-- Dynamic banner slider
-- Promotional banners (customizable blocks)
-- Deal of the week with countdown
-- Top selling products with promo box
-- Trending products with category tabs
+- Dynamic NWID hero banner
+- Tech promotional banners
+- Deal of the week with tech-focused countdowns
+- Top selling laptops and gaming gear
+- New Arrivals with category-specific tech tabs
 
 ### 📱 **Mobile Optimized**
 - Responsive design
-- Mobile-friendly navigation
+- Mobile-friendly navigation with tech categories
 - Touch-optimized sliders
 - Drawer menus
 
@@ -50,20 +50,20 @@ A modern, feature-rich Shopify theme for electronics and e-commerce stores. Buil
 1. **Upload Theme**
    - Go to Shopify Admin → Online Store → Themes
    - Click "Add theme" → "Upload ZIP file"
-   - Select `electronics-store-theme.zip`
+   - Select `NWID-LAPTOP-STORE-ULTRA-STABLE.zip`
 
 2. **Configure Menus**
    Create these menus in Navigation:
    - `main-menu` - Main navigation links
-   - `categories` - Product categories
+   - `categories` - Tech product categories
    - `footer` - Footer links
 
 3. **Set Up Collections**
-   - Create collections for your products
+   - Create collections for your products (e.g., Laptops, Components, Accessories)
    - Assign collections in theme customizer for each section
 
 4. **Customize Theme**
-   - Set your logo
+   - Set the NWID logo
    - Adjust colors and typography
    - Configure section settings
 
@@ -82,13 +82,13 @@ A modern, feature-rich Shopify theme for electronics and e-commerce stores. Buil
 
 /sections
   announcement-bar.liquid - Top announcement
-  header.liquid - Main header
+  header.liquid - Main header (NWID Branded)
   banner-slider.liquid - Homepage hero
-  promotional-banners.liquid - Promo cards
+  promotional-banners.liquid - Tech promo cards
   deals-week.liquid - Deal products
   top-selling-products.liquid - Bestsellers
   trending-products.liquid - Trending items
-  footer.liquid - Site footer
+  footer.liquid - Site footer (NWID Branded)
 
 /snippets
   main-menu.liquid - Navigation menu
@@ -105,7 +105,7 @@ A modern, feature-rich Shopify theme for electronics and e-commerce stores. Buil
   settings_data.json - Default values
 
 /assets
-  CSS, JavaScript, and image files
+  CSS, JavaScript, and image files (Clean & Stable)
 ```
 
 ## Customization
@@ -145,7 +145,7 @@ All homepage sections can be customized in the theme editor:
 
 ### Quick Actions on Products
 - **Heart Icon**: Add to wishlist
-- **Eye Icon**: Quick view (coming soon)
+- **Eye Icon**: Quick view
 - **Recycle Icon**: Add to compare
 - **Quick Add Button**: Fast cart addition
 
@@ -167,7 +167,7 @@ All homepage sections can be customized in the theme editor:
 ### Required Setup
 1. Create navigation menus
 2. Assign collections to sections
-3. Add logo and favicon
+3. Add NWID logo and favicon
 4. Configure theme colors
 
 ### Optional Enhancements
@@ -177,11 +177,11 @@ All homepage sections can be customized in the theme editor:
 - Add payment gateways
 
 ## Version
-1.0.0
+1.1.0 Stable Build
 
 ## Credits
-Converted and enhanced from MarketPro HTML template
+Customized and debugged for **NWID** by Antigravity AI.
 
 ---
+*Developed with excellence for the NWID team.*
 
-**Need help?** Check Shopify's theme documentation or contact support.

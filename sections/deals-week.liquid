@@ -1,0 +1,146 @@
+<!-- ========================= Deals Week Start ================================ -->
+<section class="deals-weeek overflow-hidden">
+    <div class="container container-lg">
+        <div class="border border-gray-100 p-24 rounded-16">
+            <div class="section-heading mb-24">
+                <div class="flex-between flex-wrap gap-8">
+                    <h6 class="mb-0 wow fadeInLeft">{{ section.settings.heading | default: 'Deal of The Week' }}</h6>
+                    <div class="flex-align gap-16 wow fadeInRight">
+                        <a href="{{ section.settings.view_all_link }}" class="text-sm fw-semibold text-main-600 hover-text-main-600 hover-text-decoration-underline">View All Deals</a>
+                        <div class="flex-align gap-8">
+                            <button type="button" id="deal-week-prev" class="slick-prev slick-arrow flex-center rounded-circle border border-gray-100 hover-border-main-600 text-xl hover-bg-main-600 hover-text-white transition-1" >
+                                <i class="ph ph-caret-left"></i>
+                            </button>
+                            <button type="button" id="deal-week-next" class="slick-next slick-arrow flex-center rounded-circle border border-gray-100 hover-border-main-600 text-xl hover-bg-main-600 hover-text-white transition-1" >
+                                <i class="ph ph-caret-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if section.settings.show_featured_deal %}
+            <div class="deal-week-box rounded-16 overflow-hidden flex-between position-relative z-1 mb-24">
+                {% if section.settings.featured_background != blank %}
+                <img src="{{ section.settings.featured_background | image_url: width: 1200 }}" alt="" class="position-absolute inset-block-start-0 inset-block-start-0 w-100 h-100 z-n1 object-fit-cover">
+                {% endif %}
+                
+                {% if section.settings.featured_image_left != blank %}
+                <div class="d-lg-block d-none ps-32 flex-shrink-0" data-aos="zoom-in">
+                    <img src="{{ section.settings.featured_image_left | image_url: width: 400 }}" alt="">
+                </div>
+                {% endif %}
+                
+                <div class="deal-week-box__content px-sm-4 d-block w-100 text-center position-relative">
+                    <!-- Overlay to prevent background bleed -->
+                    <div class="position-absolute inset-0 bg-dark" style="opacity: 0.65; z-index: 0;"></div>
+                    <h6 class="mb-20 wow bounceIn text-white position-relative" style="z-index: 2;">{{ section.settings.featured_title }}</h6>
+                    <div class="countdown mt-20 position-relative" id="countdown4" style="z-index: 2;">
+                        <ul class="countdown-list style-four flex-center flex-wrap">
+                            <li class="countdown-list__item flex-align flex-column text-sm fw-medium text-white rounded-circle bg-white-12 border border-white-13 colon-white">
+                                <span class="days"></span>Days
+                            </li>
+                            <li class="countdown-list__item flex-align flex-column text-sm fw-medium text-white rounded-circle bg-white-12 border border-white-13 colon-white">
+                                <span class="hours"></span>Hour
+                            </li>
+                            <li class="countdown-list__item flex-align flex-column text-sm fw-medium text-white rounded-circle bg-white-12 border border-white-13 colon-white">
+                                <span class="minutes"></span>Min
+                            </li>
+                            <li class="countdown-list__item flex-align flex-column text-sm fw-medium text-white rounded-circle bg-white-12 border border-white-13 colon-white">
+                                <span class="seconds"></span>Sec
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                {% if section.settings.featured_image_right != blank %}
+                <div class="d-lg-block d-none flex-shrink-0 pe-xl-5" data-aos="zoom-in">
+                    <div class="me-xxl-5">
+                        <img src="{{ section.settings.featured_image_right | image_url: width: 400 }}" alt="">
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <div class="deals-week-slider arrow-style-two">
+                {% assign collection = collections[section.settings.collection] %}
+                {% if collection != blank and collection.products.size > 0 %}
+                    {% for product in collection.products limit: 12 %}
+                    <div data-aos="fade-up" data-aos-duration="{{ forloop.index | times: 200 }}">
+                        {% render 'product-card', product: product %}
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    {% for i in (1..6) %}
+                    <div data-aos="fade-up" data-aos-duration="{{ i | times: 200 }}">
+                        {% render 'product-card-placeholder' %}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ========================= Deals Week End ================================ -->
+
+{% schema %}
+{
+  "name": "Deals Week",
+  "class": "deals-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Deal of The Week"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Product Collection"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+      "type": "header",
+      "content": "Featured Deal Box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_deal",
+      "label": "Show Featured Deal Box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "featured_title",
+      "label": "Featured Deal Title",
+      "default": "Apple AirPods Max, Over Ear Headphones"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_background",
+      "label": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image_left",
+      "label": "Left Product Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image_right",
+      "label": "Right Product Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Deals Week"
+    }
+  ]
+}
+{% endschema %}

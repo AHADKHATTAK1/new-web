@@ -1,0 +1,115 @@
+<!-- ============================ Banner Section start =============================== -->
+<div class="banner-two">
+    <div class="container container-lg">
+        <div class="banner-two-wrapper d-flex align-items-start">
+
+            <div class="w-310 d-lg-block d-none flex-shrink-0">
+                {% render 'category-sidebar' %}
+            </div>
+
+            <div class="banner-item-two-wrapper rounded-24 overflow-hidden position-relative arrow-center flex-grow-1 mb-0 m-20">
+                <img src="{{ 'banner-two-bg.png' | asset_url }}" alt="" class="banner-img position-absolute inset-block-start-0 inset-inline-start-0 w-100 h-100 z-n1 object-fit-cover rounded-24">
+
+                <div class="banner-item-two__slider">
+                    {% for block in section.blocks %}
+                        {% if block.type == 'slide' %}
+                        <div class="d-flex align-items-center justify-content-between py-84 px-72-px flex-wrap-reverse flex-sm-nowrap gap-32">   
+                            <div class="banner-item-two__content">
+                                {% if block.settings.subtitle != blank %}
+                                <span class="animate-left-right animation-delay-08 mb-8 text-md fw-semibold text-main-600">
+                                    {{ block.settings.subtitle }}
+                                </span>
+                                {% endif %}
+                                
+                                {% if block.settings.title != blank %}
+                                <h2 class="banner-item-two__title animate-left-right animation-delay-1">
+                                    {{ block.settings.title }}
+                                </h2>
+                                {% endif %}
+                                
+                                {% if block.settings.button_label != blank %}
+                                <a href="{{ block.settings.button_link }}" class="btn btn-main d-inline-flex align-items-center rounded-pill gap-8 mt-24 animate-left-right animation-delay-12">
+                                    {{ block.settings.button_label }}
+                                    <span class="icon text-xl d-flex"><i class="ph ph-shopping-cart-simple"></i></span> 
+                                </a>
+                                {% endif %}
+                            </div>
+                            
+                            {% if block.settings.image != blank %}
+                            <div class="banner-item-two__thumb">
+                                <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title }}" class="animate-scale animation-delay-12">
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================ Banner Section End =============================== -->
+
+{% schema %}
+{
+  "name": "Banner Slider",
+  "class": "banner-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_category_sidebar",
+      "label": "Show Category Sidebar",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Starting at only $250"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Get The Sound You Love For Less"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner Slider",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

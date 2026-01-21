@@ -1,0 +1,168 @@
+<!-- ========================= Top Selling Products Start ================================ -->
+<section class="top-selling-products overflow-hidden">
+    <div class="container container-lg">
+        <div class="border border-gray-100 p-24 rounded-16">
+            <div class="section-heading mb-24">
+                <div class="flex-between flex-wrap gap-8">
+                    <h6 class="mb-0 wow fadeInLeft">{{ section.settings.heading | default: 'Top Selling Products' }}</h6>
+                    <div class="flex-align gap-16 wow fadeInRight">
+                        <a href="{{ section.settings.view_all_link }}" class="text-sm fw-semibold text-gray-700 hover-text-main-600 hover-text-decoration-underline">View All Products</a>
+                        <div class="flex-align gap-8">
+                            <button type="button" id="top-selling-prev-{{ section.id }}" class="slick-prev slick-arrow flex-center rounded-circle border border-gray-100 hover-border-neutral-600 text-xl hover-bg-neutral-600 hover-text-white transition-1" >
+                                <i class="ph ph-caret-left"></i>
+                            </button>
+                            <button type="button" id="top-selling-next-{{ section.id }}" class="slick-next slick-arrow flex-center rounded-circle border border-gray-100 hover-border-neutral-600 text-xl hover-bg-neutral-600 hover-text-white transition-1" >
+                                <i class="ph ph-caret-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row g-12">
+                {% if section.settings.show_featured_promo %}
+                <div class="col-md-4" data-aos="zoom-in" data-aos-duration="800">
+                    <div class="position-relative rounded-16 overflow-hidden p-28 z-1 text-center bg-main-100 h-100">
+                        <div class="py-xl-4">
+                            <h6 class="mb-8 fw-bold">{{ section.settings.promo_title }}</h6>
+                            <h6 class="mb-8 fw-bold">{{ section.settings.promo_subtitle }}</h6>
+                            <a href="{{ section.settings.promo_link }}" class="btn text-heading border-white bg-white py-16 px-24 flex-center d-inline-flex rounded-pill gap-8 fw-medium hover-bg-main-600 hover-bg-main-two-600 hover-border-main-two-600 hover-text-white mt-24">
+                                Shop Now <i class="ph ph-shopping-cart text-xl d-flex"></i> 
+                            </a>
+                        </div>
+                        {% if section.settings.promo_image != blank %}
+                        <div class="d-md-block d-none mt-36">
+                            <img src="{{ section.settings.promo_image | image_url: width: 400 }}" alt="{{ section.settings.promo_title }}">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="{% if section.settings.show_featured_promo %}col-md-8{% else %}col-12{% endif %}">
+                    <div class="top-selling-product-slider arrow-style-two">
+                        {% assign collection = collections[section.settings.collection] %}
+                        {% if collection != blank and collection.products.size > 0 %}
+                            {% for product in collection.products limit: 8 %}
+                            <div data-aos="fade-up" data-aos-duration="{{ forloop.index | times: 200 }}">
+                                {% render 'product-card', product: product %}
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            {% for i in (1..4) %}
+                            <div data-aos="fade-up" data-aos-duration="{{ i | times: 200 }}">
+                                {% render 'product-card-placeholder' %}
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ========================= Top Selling Products End ================================ -->
+
+<script>
+    $(document).ready(function() {
+        $('.top-selling-product-slider').slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            speed: 1500,
+            dots: false,
+            pauseOnHover: true,
+            arrows: true,
+            draggable: true,
+            rtl: $('html').attr('dir') === 'rtl' ? true : false,
+            speed: 900,
+            infinite: true,
+            nextArrow: '#top-selling-next-{{ section.id }}',
+            prevArrow: '#top-selling-prev-{{ section.id }}',
+            responsive: [
+                {
+                    breakpoint: 1399,
+                    settings: {
+                        slidesToShow: 3,
+                        arrows: false,
+                    }
+                },
+                {
+                    breakpoint: 1199,
+                    settings: {
+                        slidesToShow: 2,
+                        arrows: false,
+                    }
+                },
+                {
+                    breakpoint: 575,
+                    settings: {
+                        slidesToShow: 1,
+                        arrows: false,
+                    }
+                },
+            ]
+        });
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Top Selling Products",
+  "class": "top-selling-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Top Selling Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Product Collection"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    },
+    {
+      "type": "header",
+      "content": "Featured Promo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_promo",
+      "label": "Show Featured Promo Box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "promo_title",
+      "label": "Promo Title"
+    },
+    {
+      "type": "text",
+      "id": "promo_subtitle",
+      "label": "Promo Subtitle"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Promo Image"
+    },
+    {
+      "type": "url",
+      "id": "promo_link",
+      "label": "Promo Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top Selling Products"
+    }
+  ]
+}
+{% endschema %}

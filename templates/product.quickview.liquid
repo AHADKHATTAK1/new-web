@@ -1,0 +1,91 @@
+{% layout none %}
+
+<div class="row g-0">
+  <div class="col-md-6">
+    <div class="quick-view-gallery p-24 bg-neutral-100 h-100 flex-center">
+      <div class="position-relative w-100" style="aspect-ratio: 1;">
+        <img src="{{ product.featured_media | image_url: width: 800 }}" 
+             alt="{{ product.title }}" 
+             class="w-100 h-100 object-fit-contain rounded-12">
+        {% if product.compare_at_price > product.price %}
+          <span class="badge bg-danger-600 text-white position-absolute top-12 start-12 px-12 py-6 rounded-pill fw-bold">
+            SALE
+          </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="quick-view-details p-32 p-lg-48 d-flex flex-column h-100 justify-content-center">
+      <div class="mb-8">
+        <span class="text-main-600 fw-medium text-sm">{{ product.vendor }}</span>
+      </div>
+      <h2 class="h3 mb-16 fw-bold text-neutral-900">{{ product.title }}</h2>
+      
+      <div class="d-flex align-items-center gap-12 mb-24">
+        <div class="d-flex gap-4 text-warning-600">
+          <i class="ph-fill ph-star"></i>
+          <i class="ph-fill ph-star"></i>
+          <i class="ph-fill ph-star"></i>
+          <i class="ph-fill ph-star"></i>
+          <i class="ph ph-star"></i>
+        </div>
+        <span class="text-neutral-500 text-sm">(4.0)</span>
+      </div>
+
+      <div class="price-wrapper mb-24">
+        {% if product.compare_at_price > product.price %}
+          <span class="text-neutral-400 text-lg text-decoration-line-through me-12">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+        <span class="text-heading h4 fw-bold text-main-600">{{ product.price | money }}</span>
+      </div>
+
+      <div class="product-description mb-32 text-neutral-600 text-line-4">
+        {{ product.description | strip_html | truncatewords: 50 }}
+      </div>
+
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        {% unless product.has_only_default_variant %}
+          <div class="variant-select mb-24">
+            <label class="form-label fw-semibold text-neutral-900 mb-8">Selected Variant</label>
+            <select name="id" class="form-select rounded- pill border-neutral-200">
+              {% for variant in product.variants %}
+                <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %}>
+                  {{ variant.title }} - {{ variant.price | money }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endunless %}
+
+        <div class="d-flex gap-16">
+          <div class="quantity-input flex-shrink-0">
+            <input type="number" name="quantity" value="1" min="1" class="form-control rounded-pill text-center w-80 border-neutral-200 py-12">
+          </div>
+          <button type="submit" class="btn btn-main-600 w-100 rounded-pill py-12 fw-bold d-flex align-items-center justify-content-center gap-8">
+            <i class="ph ph-shopping-cart text-xl"></i>
+            Add to Cart
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-32 pt-24 border-top border-neutral-100 d-flex gap-24">
+        <a href="{{ product.url }}" class="text-neutral-900 fw-medium hover-text-main-600 text-sm d-flex align-items-center gap-8">
+          View Full Details <i class="ph ph-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .text-line-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.6;
+  }
+</style>

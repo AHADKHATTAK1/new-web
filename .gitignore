@@ -1,0 +1,16 @@
+# Shopify Theme Gitignore
+config/settings_data.json
+.DS_Store
+Thumbs.db
+node_modules/
+.env
+new-web-repo/
+*.zip
+*.py
+scan_results.txt
+audit_fix.py
+aggressive_fix.py
+deep_scan.py
+fix_footer.py
+validate_schemas.py
+create_shopify_zip.py

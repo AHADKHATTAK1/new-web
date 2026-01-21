@@ -1,0 +1,43 @@
+<div class="responsive-dropdown style-two common-dropdown nav-submenu p-0 submenus-submenu-wrapper shadow-none border border-neutral-50 position-relative border-top-0 rounded-0">
+    <button type="button" class="close-responsive-dropdown rounded-circle text-xl position-absolute inset-inline-end-0 inset-block-start-0 mt-4 me-8 d-lg-none d-flex"> 
+        <i class="ph ph-x"></i> 
+    </button>
+
+    <div class="logo px-16 d-lg-none d-block">
+        <a href="/" class="link">
+            {{ shop.name }}
+        </a>
+    </div>
+
+    <ul class="responsive-dropdown__list scroll-sm p-0 overflow-y-auto">
+        {% for link in linklists.categories.links %}
+        <li class="has-submenus-submenu border-bottom border-neutral-50">
+            <a href="{{ link.url }}" class="text-gray-500 text-15 py-14 px-16 flex-align gap-8 rounded-0 fw-semibold text-sm">
+                <span class="d-flex align-items-center gap-16">
+                    {% if link.levels > 0 %}
+                    <span>{{ link.title }}</span>
+                    {% else %}
+                    <span>{{ link.title }}</span>
+                    {% endif %}
+                </span>
+                {% if link.links != blank %}
+                <span class="icon text-md d-flex ms-auto"><i class="ph ph-caret-right"></i></span>
+                {% endif %}
+            </a>
+
+            {% if link.links != blank %}
+            <div class="submenus-submenu py-16">
+                <h6 class="text-lg px-16 submenus-submenu__title">{{ link.title }}</h6>
+                <ul class="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
+                    {% for childlink in link.links %}
+                    <li>
+                        <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>

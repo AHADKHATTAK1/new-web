@@ -1,0 +1,227 @@
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer__overlay"></div>
+    <div class="cart-drawer__container">
+        <div class="cart-drawer__header flex-between p-24 border-bottom">
+            <h3 class="mb-0">Shopping Cart ({{ cart.item_count }})</h3>
+            <button type="button" class="cart-drawer__close text-2xl">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+
+        <div class="cart-drawer__body p-24">
+            {% if cart.item_count > 0 %}
+                <div class="cart-items">
+                    {% for item in cart.items %}
+                    <div class="cart-item flex-align gap-16 pb-16 mb-16 border-bottom" data-index="{{ forloop.index }}">
+                        <div class="cart-item__image">
+                            {% if item.image %}
+                                <img src="{{ item.image | image_url: width: 100 }}" alt="{{ item.title }}" loading="lazy">
+                            {% endif %}
+                        </div>
+                        
+                        <div class="cart-item__details flex-grow-1">
+                            <h6 class="mb-8">
+                                <a href="{{ item.url }}">{{ item.product.title }}</a>
+                            </h6>
+                            
+                            {% unless item.product.has_only_default_variant %}
+                                <p class="text-sm text-gray-500 mb-8">{{ item.variant.title }}</p>
+                            {% endunless %}
+                            
+                            <div class="flex-between">
+                                <div class="quantity-selector flex-align gap-8">
+                                    <button type="button" class="qty-btn" data-action="decrease" data-line="{{ forloop.index }}">
+                                        <i class="ph ph-minus"></i>
+                                    </button>
+                                    <input type="number" value="{{ item.quantity }}" min="0" class="qty-input" data-line="{{ forloop.index }}">
+                                    <button type="button" class="qty-btn" data-action="increase" data-line="{{ forloop.index }}">
+                                        <i class="ph ph-plus"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="cart-item__price">
+                                    <span class="fw-semibold">{{ item.final_line_price | money }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="cart-item__remove text-danger-600" data-line="{{ forloop.index }}">
+                            <i class="ph ph-trash"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-40">
+                    <i class="ph ph-shopping-cart text-6xl text-gray-300 mb-16"></i>
+                    <p class="text-gray-500">Your cart is empty</p>
+                    <a href="/collections/all" class="btn btn-main mt-16">Continue Shopping</a>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if cart.item_count > 0 %}
+        <div class="cart-drawer__footer p-24 border-top">
+            <div class="flex-between mb-16">
+                <span class="fw-semibold">Subtotal:</span>
+                <span class="fw-bold text-lg">{{ cart.total_price | money }}</span>
+            </div>
+            
+            <p class="text-sm text-gray-500 mb-16">Shipping & taxes calculated at checkout</p>
+            
+            <a href="{{ routes.cart_url }}" class="btn btn-outline-main w-100 mb-12">View Cart</a>
+            <a href="/checkout" class="btn btn-main w-100">Proceed to Checkout</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.cart-drawer.active {
+    pointer-events: all;
+}
+
+.cart-drawer__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cart-drawer.active .cart-drawer__overlay {
+    opacity: 1;
+}
+
+.cart-drawer__container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 450px;
+    height: 100%;
+    background: white;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-drawer.active .cart-drawer__container {
+    transform: translateX(0);
+}
+
+.cart-drawer__body {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.cart-item__image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.qty-input {
+    width: 50px;
+    height: 32px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+}
+
+.cart-item__remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cartDrawer = document.getElementById('cart-drawer');
+    const closeBtn = cartDrawer.querySelector('.cart-drawer__close');
+    const overlay = cartDrawer.querySelector('.cart-drawer__overlay');
+    
+    // Open cart drawer
+    document.querySelectorAll('[data-cart-trigger]').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartDrawer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    
+    // Close cart drawer
+    const closeDrawer = () => {
+        cartDrawer.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+    
+    closeBtn?.addEventListener('click', closeDrawer);
+    overlay?.addEventListener('click', closeDrawer);
+    
+    // Update cart quantity
+    cartDrawer.querySelectorAll('.qty-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const action = this.dataset.action;
+            const line = this.dataset.line;
+            const input = cartDrawer.querySelector(`input[data-line="${line}"]`);
+            let qty = parseInt(input.value);
+            
+            if (action === 'increase') qty++;
+            if (action === 'decrease' && qty > 1) qty--;
+            
+            updateCart(line, qty);
+        });
+    });
+    
+    // Remove item
+    cartDrawer.querySelectorAll('.cart-item__remove').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const line = this.dataset.line;
+            updateCart(line, 0);
+        });
+    });
+    
+    function updateCart(line, qty) {
+        fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ line, quantity: qty })
+        })
+        .then(res => res.json())
+        .then(() => {
+            window.location.reload();
+        });
+    }
+});
+</script>

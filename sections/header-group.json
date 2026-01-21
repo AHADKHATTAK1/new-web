@@ -1,0 +1,60 @@
+{
+  "name": "Header",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "🚚 Free Shipping on Orders Over $50",
+            "link": "/collections/all"
+          }
+        },
+        "announcement-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "🎁 Special Offer: Buy 2 Get 1 Free!",
+            "link": "/collections/sale"
+          }
+        },
+        "announcement-3": {
+          "type": "announcement",
+          "settings": {
+            "text": "🔥 flash Sale Ends Soon!",
+            "link": "/collections/flash-deals"
+          }
+        }
+      },
+      "block_order": [
+        "announcement-1",
+        "announcement-2",
+        "announcement-3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "show_line_separator": true,
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "enable_sticky": true
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "logo_position": "middle-left",
+        "menu": "main-menu",
+        "show_line_separator": true,
+        "enable_sticky_header": true,
+        "show_social": true,
+        "show_search": true
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

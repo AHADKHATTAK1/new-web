@@ -1,0 +1,286 @@
+{%- comment -%}
+  Advanced Product Card with Quick View, Wishlist, Compare
+  Usage: {% render 'product-card-advanced', product: product, show_vendor: true %}
+{%- endcomment -%}
+
+{%- liquid
+  assign ratio = 1
+  if card_product and card_product != empty
+    assign product_image = card_product.featured_media
+    assign image_ratio = product_image.aspect_ratio | default: ratio
+  endif
+-%}
+
+<div class="product-card h-100{% if card_product.available == false %} product-card--sold-out{% endif %}" data-product-id="{{ card_product.id }}">
+  
+  {%- comment -%} Product Image {%- endcomment -%}
+  <div class="product-card__image-wrapper position-relative overflow-hidden">
+    
+    {%- comment -%} Badges {%- endcomment -%}
+    <div class="product-card__badges position-absolute top-0 start-0 m-8 d-flex flex-column gap-8 z-1">
+      {%- if card_product.compare_at_price > card_product.price and card_product.available -%}
+        {%- assign discount = card_product.compare_at_price | minus: card_product.price | times: 100.0 | divided_by: card_product.compare_at_price | round -%}
+        <span class="badge bg-danger-600 text-white px-8 py-4 text-xs fw-semibold rounded">
+          -{{ discount }}%
+        </span>
+      {%- endif -%}
+      
+      {%- if card_product.available == false -%}
+        <span class="badge bg-neutral-600 text-white px-8 py-4 text-xs fw-semibold rounded">
+          {{ 'products.product.sold_out' | t }}
+        </span>
+      {%- elsif card_product.tags contains 'new' -%}
+        <span class="badge bg-success-600 text-white px-8 py-4 text-xs fw-semibold rounded">
+          {{ 'products.product.new' | t | default: 'New' }}
+        </span>
+      {%- elsif card_product.tags contains 'hot' -%}
+        <span class="badge bg-warning-600 text-white px-8 py-4 text-xs fw-semibold rounded">
+          🔥 Hot
+        </span>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Action Buttons {%- endcomment -%}
+    <div class="product-card__actions position-absolute top-0 end-0 m-8 d-flex flex-column gap-8 z-1">
+      {%- comment -%} Wishlist {%- endcomment -%}
+      <button type="button" 
+              class="product-card__action-btn w-40 h-40 flex-center rounded-circle bg-white hover-bg-main-600 text-main-600 hover-text-white transition-2"
+              data-wishlist-add
+              data-product-handle="{{ card_product.handle }}"
+              aria-label="Add to wishlist">
+        <i class="ph ph-heart text-lg"></i>
+      </button>
+      
+      {%- comment -%} Compare {%- endcomment -%}
+      <button type="button"
+              class="product-card__action-btn w-40 h-40 flex-center rounded-circle bg-white hover-bg-main-600 text-main-600 hover-text-white transition-2"
+              data-compare-add
+              data-product-handle="{{ card_product.handle }}"
+              aria-label="Add to compare">
+        <i class="ph ph-recycle text-lg"></i>
+      </button>
+      
+      {%- comment -%} Quick View {%- endcomment -%}
+      <button type="button"
+              class="product-card__action-btn w-40 h-40 flex-center rounded-circle bg-white hover-bg-main-600 text-main-600 hover-text-white transition-2"
+              data-quick-view
+              data-product-handle="{{ card_product.handle }}"
+              aria-label="Quick view">
+        <i class="ph ph-eye text-lg"></i>
+      </button>
+    </div>
+
+    {%- comment -%} Product Image {%- endcomment -%}
+    <a href="{{ card_product.url }}" class="product-card__link d-block">
+      {%- if card_product.featured_media -%}
+        <img src="{{ card_product.featured_media | image_url: width: 600 }}"
+             alt="{{ card_product.featured_media.alt | escape }}"
+             class="product-card__img w-100 object-fit-cover"
+             loading="lazy"
+             width="600"
+             height="{{ 600 | divided_by: image_ratio | ceil }}">
+        
+        {%- comment -%} Hover Image (second image) {%- endcomment -%}
+        {%- if card_product.media[1] != nil and card_product.media[1].media_type == 'image' -%}
+          <img src="{{ card_product.media[1] | image_url: width: 600 }}"
+               alt="{{ card_product.media[1].alt | escape }}"
+               class="product-card__img-hover position-absolute top-0 start-0 w-100 h-100 object-fit-cover opacity-0 transition-2"
+               loading="lazy"
+               width="600"
+               height="{{ 600 | divided_by: image_ratio | ceil }}">
+        {%- endif -%}
+      {%- else -%}
+        <div class="product-card__placeholder bg-neutral-100 d-flex align-items-center justify-content-center" style="aspect-ratio: {{ ratio }};">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </a>
+
+    {%- comment -%} Quick Add to Cart Button {%- endcomment -%}
+    {%- if card_product.available and card_product.variants.size == 1 -%}
+      <div class="product-card__cart-btn position-absolute bottom-0 start-0 end-0 p-12 translate-y-100 transition-2">
+        <form action="{{ routes.cart_add_url }}" method="post" class="product-card__form">
+          <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+          <button type="submit"
+                  class="btn btn-main-600 w-100 py-10 text-sm fw-medium rounded-pill"
+                  name="add"
+                  {% unless card_product.available %}disabled{% endunless %}>
+            <i class="ph ph-shopping-cart me-4"></i>
+            {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+          </button>
+        </form>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Product Info {%- endcomment -%}
+  <div class="product-card__content p-12">
+    
+    {%- comment -%} Vendor {%- endcomment -%}
+    {%- if show_vendor -%}
+      <span class="product-card__vendor text-xs text-neutral-500 d-block mb-4">
+        {{ card_product.vendor }}
+      </span>
+    {%- endif -%}
+    
+    {%- comment -%} Title {%- endcomment -%}
+    <h3 class="product-card__title mb-8">
+      <a href="{{ card_product.url }}" class="link text-line-2 text-neutral-900 fw-medium hover-text-main-600 transition-2">
+        {{ card_product.title }}
+      </a>
+    </h3>
+    
+    {%- comment -%} Rating {%- endcomment -%}
+    {%- if card_product.metafields.reviews.rating.value != blank or settings.product_rating_enable -%}
+      <div class="product-card__rating mb-8 d-flex align-items-center gap-4">
+        <div class="d-flex gap-4">
+          {%- liquid
+            assign rating_decimal = 0 
+            assign decimal = 0
+            assign rating_max = 5
+            assign rating_value = card_product.metafields.reviews.rating.value.rating | default: 0
+            assign rating_count = card_product.metafields.reviews.rating_count | default: 0
+            if rating_value != blank
+              assign rating_decimal = rating_value | modulo: 1 
+              assign decimal = 3
+            endif
+          -%}
+          
+          {%- for i in (1..rating_max) -%}
+            <span class="text-warning-600 text-xs">
+              {%- if rating_value >= i -%}
+                <i class="ph-fill ph-star"></i>
+              {%- elsif rating_value > i and rating_decimal > decimal -%}
+                <i class="ph-fill ph-star-half"></i>
+              {%- else -%}
+                <i class="ph ph-star"></i>
+              {%- endif -%}
+            </span>
+          {%- endfor -%}
+        </div>
+        {%- if rating_count > 0 -%}
+          <span class="text-xs text-neutral-500">({{ rating_count }})</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    
+    {%- comment -%} Price {%- endcomment -%}
+    <div class="product-card__price mt-8">
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <span class="text-neutral-400 text-sm text-decoration-line-through me-8">
+          {{ card_product.compare_at_price | money }}
+        </span>
+        <span class="text-heading fw-semibold">
+          {{ card_product.price | money }}
+        </span>
+      {%- else -%}
+        <span class="text-heading fw-semibold">
+          {{ card_product.price | money }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Variants {%- endcomment -%}
+    {%- if card_product.has_only_default_variant == false -%}
+      <div class="product-card__variants mt-12">
+        <span class="text-xs text-neutral-500">
+          {{ card_product.variants.size }} {{ 'products.product.variants' | t | default: 'variants' }}
+        </span>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+  
+  .product-card__image-wrapper {
+    position: relative;
+    aspect-ratio: 1;
+    background: #f5f5f5;
+  }
+  
+  .product-card:hover .product-card__img-hover {
+    opacity: 1;
+  }
+  
+  .product-card:hover .product-card__cart-btn {
+    transform: translateY(0);
+  }
+  
+  .product-card__action-btn {
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .product-card__action-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  .product-card__link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  
+  .product-card__img,
+  .product-card__img-hover {
+    transition: transform 0.6s ease;
+  }
+  
+  .product-card:hover .product-card__img {
+    transform: scale(1.05);
+  }
+  
+  .text-line-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .transition-2 {
+    transition: all 0.3s ease;
+  }
+</style>
+
+<script>
+  // Quick View Handler
+  document.querySelectorAll('[data-quick-view]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const handle = this.dataset.productHandle;
+      // Trigger quick view modal (implement separately)
+      console.log('Quick view:', handle);
+      // You can add modal trigger here
+    });
+  });
+
+  // Wishlist Handler
+  document.querySelectorAll('[data-wishlist-add]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const handle = this.dataset.productHandle;
+      // Add to wishlist logic
+      this.querySelector('i').classList.toggle('ph-fill');
+      console.log('Wishlist:', handle);
+    });
+  });
+
+  // Compare Handler
+  document.querySelectorAll('[data-compare-add]').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const handle = this.dataset.productHandle;
+      // Add to compare logic
+      console.log('Compare:', handle);
+    });
+  });
+</script>

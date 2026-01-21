@@ -1,0 +1,203 @@
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="trust-badges color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    
+    {%- unless section.settings.heading == blank -%}
+      <div class="title-wrapper text-center" style="margin-bottom: 2rem;">
+        <h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
+      </div>
+    {%- endunless -%}
+    
+    <div class="trust-badges-grid grid grid--2-col grid--4-col-tablet grid--{{ section.blocks.size }}-col-desktop" style="gap: 2rem;">
+      {%- for block in section.blocks -%}
+        <div class="trust-badge" {{ block.shopify_attributes }}>
+          <div class="trust-badge__inner" style="text-align: center; padding: 1.5rem; border-radius: 8px; background: rgba(var(--color-foreground-rgb), 0.03); transition: all 0.3s;">
+            
+            {%- if block.settings.icon != blank -%}
+              <div class="trust-badge__icon" style="font-size: 3rem; margin-bottom: 1rem; color: rgb(var(--color-button-rgb));">
+                {{ block.settings.icon }}
+              </div>
+            {%- elsif block.settings.image != blank -%}
+              <div class="trust-badge__image" style="margin-bottom: 1rem;">
+                {{
+                  block.settings.image
+                  | image_url: width: 100
+                  | image_tag: loading: 'lazy', class: 'trust-badge__img', style: 'width: 60px; height: 60px; margin: 0 auto;'
+                }}
+              </div>
+            {%- endif -%}
+            
+            {%- if block.settings.heading != blank -%}
+              <h3 class="trust-badge__heading" style="margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600;">
+                {{ block.settings.heading }}
+              </h3>
+            {%- endif -%}
+            
+            {%- if block.settings.text != blank -%}
+              <p class="trust-badge__text" style="margin: 0; font-size: 0.9rem; color: rgba(var(--color-foreground-rgb), 0.7);">
+                {{ block.settings.text }}
+              </p>
+            {%- endif -%}
+            
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    
+  </div>
+</div>
+
+<style>
+  .trust-badge__inner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Trust Badges",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Shop With Us"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or symbol)",
+          "default": "🚚",
+          "info": "Use emoji or HTML entity"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (alternative to icon)"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "On orders over $50"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Badges",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "🚚",
+  "heading": "Free Shipping",
+            "text": "On orders over $50"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "🔒",
+            "heading": "Secure Payment",
+            "text": "100% secure transactions"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "↩️",
+            "heading": "Easy Returns",
+            "text": "30-day return policy"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "⭐",
+            "heading": "Top Quality",
+            "text": "Premium products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

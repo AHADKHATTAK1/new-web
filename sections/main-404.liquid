@@ -1,0 +1,183 @@
+<div class="error-404 color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="error-404__content" style="text-align: center; max-width: 600px; margin: 0 auto; padding: 60px 20px;">
+      
+      <!-- 404 Icon/Number -->
+      <div class="error-404__icon" style="margin-bottom: 30px;">
+        <h1 style="font-size: 120px; line-height: 1; margin: 0; font-weight: 900; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+          404
+        </h1>
+      </div>
+
+      <!-- Heading -->
+      <h2 style="font-size: 32px; margin: 0 0 15px; font-weight: 700;">
+        {{ section.settings.heading | default: "Page Not Found" }}
+      </h2>
+
+      <!-- Description -->
+      <div class="rte" style="font-size: 16px; color: rgba(var(--color-foreground-rgb), 0.7); margin-bottom: 40px; line-height: 1.6;">
+        {{ section.settings.text | default: "Sorry, the page you're looking for doesn't exist. It might have been moved or deleted." }}
+      </div>
+
+      <!-- Search Box -->
+      <div class="error-404__search" style="margin-bottom: 30px;">
+        <form action="/search" method="get" role="search" style="display: flex; max-width: 500px; margin: 0 auto; gap: 10px;">
+          <input
+            type="search"
+            name="q"
+            placeholder="Search our store..."
+            style="flex: 1; padding: 15px 20px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 15px;"
+            required
+          >
+          <button
+            type="submit"
+            style="padding: 15px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: transform 0.2s;"
+            onmouseover="this.style.transform='scale(1.05)'"
+            onmouseout="this.style.transform='scale(1)'"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="error-404__links" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 40px;">
+        <a href="/" class="button button--primary" style="display: inline-block; padding: 12px 30px; background: #000; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.3s;">
+          🏠 Go Home
+        </a>
+        <a href="/collections/all" class="button button--secondary" style="display: inline-block; padding: 12px 30px; background: transparent; color: #000; text-decoration: none; border: 2px solid #000; border-radius: 6px; font-weight: 600; transition: all 0.3s;">
+          🛍️ Shop All
+        </a>
+        <a href="/pages/contact" class="button button--secondary" style="display: inline-block; padding: 12px 30px; background: transparent; color: #000; text-decoration: none; border: 2px solid #000; border-radius: 6px; font-weight: 600; transition: all 0.3s;">
+          📧 Contact Us
+        </a>
+      </div>
+
+      <!-- Popular Categories -->
+      <div class="error-404__categories" style="margin-top: 50px; padding-top: 40px; border-top: 1px solid #e0e0e0;">
+        <h3 style="font-size: 18px; margin-bottom: 20px; font-weight: 600;">
+          Popular Categories
+        </h3>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+          {% for link in linklists.main-menu.links limit: 6 %}
+            <a href="{{ link.url }}" style="padding: 8px 20px; background: #f5f5f5; color: #333; text-decoration: none; border-radius: 20px; font-size: 14px; transition: all 0.2s; display: inline-block;">
+              {{ link.title }}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .error-404__links a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  .error-404__categories a:hover {
+    background: #667eea;
+    color: white;
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 749px) {
+    .error-404__icon h1 {
+      font-size: 80px;
+    }
+    
+    .error-404__content h2 {
+      font-size: 24px;
+    }
+    
+    .error-404__search form {
+      flex-direction: column;
+    }
+    
+    .error-404__search button {
+      width: 100%;
+    }
+    
+    .error-404__links {
+      flex-direction: column;
+    }
+    
+    .error-404__links a {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Page Not Found",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Page Not Found"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>Sorry, the page you're looking for doesn't exist. It might have been moved or deleted.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page Not Found"
+    }
+  ]
+}
+{% endschema %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}

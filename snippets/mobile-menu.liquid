@@ -1,0 +1,17 @@
+<!-- ==================== Mobile Menu Start Here ==================== -->
+<div class="mobile-menu scroll-sm d-lg-none d-block">
+    <button type="button" class="close-button"> <i class="ph ph-x"></i> </button>
+    <div class="mobile-menu__inner">
+        <a href="/" class="mobile-menu__logo">
+            {% if section.settings.logo != blank %}
+                <img src="{{ section.settings.logo | image_url: width: 150 }}" alt="{{ shop.name }}">
+            {% else %}
+                <span class="h4">{{ shop.name }}</span>
+            {% endif %}
+        </a>
+        <div class="mobile-menu__menu">
+            {% render 'main-menu' %}
+        </div>
+    </div>
+</div>
+<!-- ==================== Mobile Menu End Here ==================== -->

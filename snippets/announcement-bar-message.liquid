@@ -1,0 +1,104 @@
+{%- liquid
+  assign icon = block.settings.icon
+  assign text = block.settings.text
+  assign link_text = block.settings.link_text
+  assign link = block.settings.link
+  assign show_countdown = block.settings.show_countdown
+  assign countdown_date = block.settings.countdown_end_date
+-%}
+
+{%- if icon != 'none' -%}
+  <span class="announcement-bar__icon">
+    {%- case icon -%}
+      {%- when 'truck' -%}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8zM5.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+        </svg>
+      {%- when 'tag' -%}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 12l10 10 10-10L12 2zM6 12l6-6 6 6-6 6-6-6z"/>
+        </svg>
+      {%- when 'gift' -%}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="8" width="18" height="4"/><rect x="3" y="12" width="18" height="9"/><path d="M12 8V21M9 8c0-1.5-1.5-3-3-3s-3 1.5-3 3M15 8c0-1.5 1.5-3 3-3s3 1.5 3 3"/>
+        </svg>
+      {%- when 'info' -%}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
+        </svg>
+      {%- when 'star' -%}
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+    {%- endcase -%}
+  </span>
+{%- endif -%}
+
+<div class="announcement-bar__text rte">
+  {{ text }}
+</div>
+
+{%- if show_countdown and countdown_date != blank -%}
+  <div class="announcement-bar__countdown" data-countdown="{{ countdown_date }}">
+    <span class="countdown-item">
+      <span class="countdown-number days">0</span>
+      <span class="countdown-label">d</span>
+    </span>
+    <span class="countdown-separator">:</span>
+    <span class="countdown-item">
+      <span class="countdown-number hours">00</span>
+      <span class="countdown-label">h</span>
+    </span>
+    <span class="countdown-separator">:</span>
+    <span class="countdown-item">
+      <span class="countdown-number minutes">00</span>
+      <span class="countdown-label">m</span>
+    </span>
+    <span class="countdown-separator">:</span>
+    <span class="countdown-item">
+      <span class="countdown-number seconds">00</span>
+      <span class="countdown-label">s</span>
+    </span>
+  </div>
+ 
+  <script>
+    (function() {
+      const countdownEl = document.querySelector('[data-countdown="{{ countdown_date }}"]');
+      if (!countdownEl) return;
+      
+      const endDate = new Date('{{ countdown_date }}').getTime();
+      
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = endDate - now;
+        
+        if (distance < 0) {
+          countdownEl.innerHTML = '<span>Sale ended</span>';
+          return;
+        }
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        countdownEl.querySelector('.days').textContent = days;
+        countdownEl.querySelector('.hours').textContent = String(hours).padStart(2, '0');
+        countdownEl.querySelector('.minutes').textContent = String(minutes).padStart(2, '0');
+        countdownEl.querySelector('.seconds').textContent = String(seconds).padStart(2, '0');
+      }
+      
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+  </script>
+{%- endif -%}
+
+{%- if link_text != blank and link != blank -%}
+  <a href="{{ link }}" class="announcement-bar__link">
+    {{ link_text }}
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 12l4-4-4-4"/>
+    </svg>
+  </a>
+{%- endif -%}

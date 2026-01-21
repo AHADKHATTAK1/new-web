@@ -1,0 +1,69 @@
+{% if shop.policies.size > 0 %}
+  <div class="footer-policies">
+    <button
+      class="policy-list-trigger text-neutral-300 hover-text-white text-sm"
+      type="button"
+      onclick="this.nextElementSibling.classList.toggle('show')"
+    >
+      Terms & Policies
+    </button>
+    <ul class="policy-list d-none">
+      {%- for policy in shop.policies -%}
+        {%- if policy != blank -%}
+          <li>
+            <a href="{{ policy.url }}" class="text-neutral-300 hover-text-white">
+              {{- policy.title | escape -}}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+
+  <style>
+    .policy-list-trigger {
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+    }
+    
+    .policy-list {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 8px;
+      min-width: 200px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .policy-list.show {
+      display: block !important;
+    }
+    
+    .policy-list li {
+      list-style: none;
+      margin: 0;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    
+    .policy-list li:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    
+    .policy-list li a {
+      display: block;
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    
+    .footer-policies {
+      position: relative;
+    }
+  </style>
+{% endif %}

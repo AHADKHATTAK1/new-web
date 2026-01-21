@@ -1,0 +1,295 @@
+
+
+<div class="announcement-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.enable_sticky %} announcement-bar--sticky{% endif %}" role="region" aria-label="Announcement" style="margin-top: 0 !important; padding-top: 0 !important;">
+  <div class="{% if section.settings.enable_full_width %}page-width--full{% else %}page-width{% endif %}">
+    
+    {%- if section.blocks.size > 0 -%}
+      {%- if section.blocks.size == 1 -%}
+        {%- for block in section.blocks -%}
+          <div class="announcement-bar__message" {{ block.shopify_attributes }}>
+            {%- render 'announcement-bar-message', block: block -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="announcement-bar-slider" data-autoplay="{{ section.settings.auto_rotate }}" data-speed="{{ section.settings.change_slides_speed }}">
+          {%- for block in section.blocks -%}
+            <div class="announcement-bar__message" {{ block.shopify_attributes }}>
+              {%- render 'announcement-bar-message', block: block -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+  .announcement-bar {
+    position: relative;
+    z-index: 10;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .announcement-bar--sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .announcement-bar__message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 6px 20px;
+    text-align: center;
+    min-height: 30px;
+  }
+  
+  .announcement-bar__text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  
+  .announcement-bar__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  
+  .announcement-bar__link:hover {
+    opacity: 0.8;
+  }
+  
+  .announcement-bar__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  
+  .announcement-bar__countdown {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  
+  .countdown-item {
+    display: inline-flex;
+    gap: 4px;
+    align-items: baseline;
+  }
+  
+  .countdown-number {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .countdown-label {
+    font-size: 11px;
+    opacity: 0.9;
+    text-transform: uppercase;
+  }
+  
+  /* Slider */
+  .announcement-bar-slider {
+    position: relative;
+  }
+  
+  .announcement-bar-slider .announcement-bar__message {
+    display: none;
+  }
+  
+  .announcement-bar-slider .announcement-bar__message:first-child {
+    display: flex;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .announcement-bar__message {
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 15px;
+      font-size: 13px;
+    }
+    
+    .announcement-bar__countdown {
+      gap: 8px;
+      font-size: 12px;
+    }
+    
+    .countdown-number {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<script>
+  class AnnouncementBarSlider {
+    constructor(slider) {
+      this.slider = slider;
+      this.messages = this.slider.querySelectorAll('.announcement-bar__message');
+      this.currentIndex = 0;
+      this.autoplay = this.slider.dataset.autoplay === 'true';
+      this.speed = parseInt(this.slider.dataset.speed) || 5;
+      
+      if (this.autoplay && this.messages.length > 1) {
+        this.startAutoplay();
+      }
+    }
+    
+    showMessage(index) {
+      this.messages.forEach(msg => msg.style.display = 'none');
+      this.messages[index].style.display = 'flex';
+    }
+    
+    nextMessage() {
+      this.currentIndex = (this.currentIndex + 1) % this.messages.length;
+      this.showMessage(this.currentIndex);
+    }
+    
+    startAutoplay() {
+      setInterval(() => this.nextMessage(), this.speed * 1000);
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const sliders = document.querySelectorAll('.announcement-bar-slider');
+    sliders.forEach(slider => new AnnouncementBarSlider(slider));
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "max_blocks": 5,
+  "class": "shopify-section-announcement-bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Enable sticky announcement bar",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_full_width",
+      "label": "Enable full width",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate announcements",
+      "default": true,
+      "info": "Only applies when you have multiple announcement blocks"
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "sec",
+      "label": "Change slides every",
+      "default": 5
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "truck",
+              "label": "Shipping truck"
+            },
+            {
+              "value": "tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "info",
+              "label": "Information"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Welcome to our store</p>"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_countdown",
+          "label": "Show countdown timer",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "countdown_end_date",
+          "label": "Countdown end date",
+          "info": "Format: YYYY-MM-DD HH:MM (e.g., 2024-12-31 23:59)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top Announcement Bar",
+      "blocks": [
+        {
+          "type": "announcement",
+          "settings": {
+            "text": "<p>Free shipping on orders over $50</p>",
+            "icon": "truck"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

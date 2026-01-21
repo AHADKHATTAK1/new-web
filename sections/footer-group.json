@@ -1,0 +1,54 @@
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "footer-link-1": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "footer"
+          }
+        },
+        "footer-link-2": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Customer Service",
+            "menu": "footer"
+          }
+        },
+        "footer-link-3": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Information",
+            "menu": "footer"
+          }
+        },
+        "footer-newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Subscribe to our newsletter",
+            "subtext": "Be the first to know about new collections and exclusive offers."
+          }
+        }
+      },
+      "block_order": [
+        "footer-link-1",
+        "footer-link-2",
+        "footer-link-3",
+        "footer-newsletter"
+      ],
+      "settings": {
+        "enable_full_width": false,
+        "copyright_text": "© 2026 All Rights Reserved",
+        "show_payment_icons": true,
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

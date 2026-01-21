@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}" class="color-two font-exo header-sticky-style">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags.join(', ') }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+    {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
+    {%- if settings.favicon != blank -%}
+        <link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}" type="image/png">
+    {%- endif -%}
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    <!-- Base CSS (Essential Styles) -->
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'wishlist.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'compare.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'recently-viewed.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'newsletter-popup.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'color-swatches.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'stock-urgency.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'live-search.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'image-zoom.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'social-share.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'sticky-add-to-cart.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'shipping-progress.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'back-to-top.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- Bootstrap -->
+    {{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
+    
+    <!-- Select2 -->
+    {{ 'select2.min.css' | asset_url | stylesheet_tag }}
+    
+    <!-- Slick -->
+    {{ 'slick.css' | asset_url | stylesheet_tag }}
+    
+    <!-- jQuery UI -->
+    {{ 'jquery-ui.css' | asset_url | stylesheet_tag }}
+    
+    <!-- Animate -->
+    {{ 'animate.css' | asset_url | stylesheet_tag }}
+    
+    <!-- AOS Animation -->
+    {{ 'aos.css' | asset_url | stylesheet_tag }}
+    
+    <!-- Main CSS -->
+    {{ 'main.css' | asset_url | stylesheet_tag }}
+
+    {{ content_for_header }}
+
+    <style>
+      @keyframes popup-bounce {
+        0% { 
+          transform: scale(0) rotate(0deg); 
+          opacity: 0;
+        }
+        50% { 
+          transform: scale(1.2) rotate(180deg); 
+          opacity: 1;
+        }
+        70% { 
+          transform: scale(0.95) rotate(270deg); 
+        }
+        85% { 
+          transform: scale(1.05) rotate(360deg); 
+        }
+        100% { 
+          transform: scale(1) rotate(360deg); 
+          opacity: 1;
+        }
+      }
+      
+      @keyframes continuous-glow {
+        0%, 100% { 
+          filter: drop-shadow(0 0 15px rgba(41, 98, 255, 0.8))
+                  drop-shadow(0 0 30px rgba(41, 98, 255, 0.6));
+          transform: scale(1) rotate(0deg);
+        }
+        33% { 
+          filter: drop-shadow(0 0 20px rgba(255, 41, 98, 0.8))
+                  drop-shadow(0 0 40px rgba(255, 41, 98, 0.6));
+          transform: scale(1.03) rotate(120deg);
+        }
+        66% { 
+          filter: drop-shadow(0 0 20px rgba(41, 255, 98, 0.8))
+                  drop-shadow(0 0 40px rgba(41, 255, 98, 0.6));
+          transform: scale(1.03) rotate(240deg);
+        }
+      }
+      
+      .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle, rgba(0,0,0,0.95) 0%, rgba(0,0,0,1) 100%);
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+      
+      .preloader.fade-out {
+        opacity: 0;
+        visibility: hidden;
+      }
+      
+      .preloader img {
+        animation: popup-bounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
+                   continuous-glow 2.5s ease-in-out infinite 0.8s;
+        max-width: 90vw;
+        max-height: 90vh;
+      }
+      
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .preloader img {
+          width: 100px !important;
+          height: 100px !important;
+        }
+      }
+      
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .preloader img {
+          width: 130px !important;
+          height: 130px !important;
+        }
+      }
+      
+      /* Global Top Gap Fix */
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      /* Global Gap Killer */
+      .shopify-section {
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+      }
+      
+      .main-content, #MainContent {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+      }
+
+      /* Reduce internal section padding if they use specific classes */
+      .section-padding, .py-120, .py-100, .py-80, .py-60, .py-40,
+      .pt-120, .pb-120, .pt-100, .pb-100, .pt-80, .pb-80,
+      .my-120, .my-100, .my-80, .my-60, .my-40 {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
+      
+      .container, .container-lg {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
+    </style>
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
+      
+      window.addEventListener('load', function() {
+        const preloader = document.querySelector('.preloader');
+        if (preloader) {
+          preloader.classList.add('fade-out');
+        }
+      });
+    </script>
+</head>
+
+<body><div class="preloader"><img src="{{ 'nwic-nwic-logo.png' | asset_url }}" alt="NWIC Trading Company" style="width: 150px; height: 150px;"></div>
+    {% sections 'header-group' %}
+
+    <!-- Main Content -->
+    <main id="MainContent" class="content-for-layout" role="main" tabindex="-1">
+        {{ content_for_layout }}
+    </main>
+
+    <!-- Footer -->
+    {% sections 'footer-group' %}
+    
+    {% render 'quick-view-modal' %}
+    
+    {%- comment -%} Cookie Banner (Optional) {%- endcomment -%}
+    {%- if snippets['cookies-banner'] -%}
+      {% render 'cookies-banner' %}
+    {%- endif -%}
+
+    <!-- Cart Drawer -->
+    {% render 'cart-drawer' %}
+    
+    <!-- Wishlist Component -->
+    {% render 'wishlist' %}
+
+    <!-- jQuery -->
+    <script src="{{ 'jquery-3.7.1.min.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- Bootstrap Bundle JS -->
+    <script src="{{ 'boostrap.bundle.min.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- Phosphor Icon JS -->
+    <script src="{{ 'phosphor-icon.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- Select2 -->
+    <script src="{{ 'select2.min.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- jQuery UI -->
+    <script src="{{ 'jquery-ui.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- Countdown -->
+    <script src="{{ 'count-down.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- Slick -->
+    <script src="{{ 'slick.min.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- AOS Animation -->
+    <script src="{{ 'aos.js' | asset_url }}" defer="defer"></script>
+    
+    <!-- Main JS -->
+    <script src="{{ 'main.js' | asset_url }}" defer="defer"></script>
+
+    <!-- Overlays -->
+    <div class="overlay"></div>
+    <div class="side-overlay"></div>
+
+    <!-- Scroll to Top -->
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+
+    <!-- Search Box -->
+    {% render 'search-box' %}
+
+    <!-- Mobile Menu -->
+    {% render 'mobile-menu' %}
+
+</body>
+</html>

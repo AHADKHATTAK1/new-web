@@ -1,0 +1,150 @@
+<!-- Wishlist Functionality (works with localStorage) -->
+<div class="wishlist-icon position-relative">
+    <a href="/pages/wishlist" class="flex-align gap-6 item-hover">
+        <span class="text-2xl text-heading d-flex position-relative me-6 mt-6 item-hover__text">
+            <i class="ph-bold ph-heart"></i>
+            <span class="wishlist-count w-18 h-18 flex-center rounded-circle bg-danger-600 text-white text-xs position-absolute top-n6 end-n4">0</span>
+        </span>
+        <span class="text-md text-neutral-500 item-hover__text fw-medium d-none d-lg-flex">Wishlist</span>
+    </a>
+</div>
+
+<script>
+// Wishlist functionality using localStorage
+class Wishlist {
+    constructor() {
+        this.items = this.getItems();
+        this.init();
+    }
+    
+    init() {
+        // Update wishlist count on page load
+        this.updateCount();
+        
+        // Add event listeners to wishlist buttons
+        document.querySelectorAll('[data-wishlist-btn]').forEach(btn => {
+            const productId = btn.dataset.productId;
+            if (this.has(productId)) {
+                btn.classList.add('active');
+                btn.querySelector('i')?.classList.replace('ph', 'ph-fill');
+            }
+            
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.toggle(productId, btn);
+            });
+        });
+    }
+    
+    getItems() {
+        try {
+            return JSON.parse(localStorage.getItem('wishlist') || '[]');
+        } catch {
+            return [];
+        }
+    }
+    
+    save() {
+        localStorage.setItem('wishlist', JSON.stringify(this.items));
+    }
+    
+    add(productId) {
+        if (!this.has(productId)) {
+            this.items.push(productId);
+            this.save();
+            this.updateCount();
+            return true;
+        }
+        return false;
+    }
+    
+    remove(productId) {
+        this.items = this.items.filter(id => id !== productId);
+        this.save();
+        this.updateCount();
+    }
+    
+    has(productId) {
+        return this.items.includes(productId);
+    }
+    
+    toggle(productId, btn) {
+        const icon = btn.querySelector('i');
+        
+        if (this.has(productId)) {
+            this.remove(productId);
+            btn.classList.remove('active');
+            icon?.classList.replace('ph-fill', 'ph');
+            this.showNotification('Removed from wishlist');
+        } else {
+            this.add(productId);
+            btn.classList.add('active');
+            icon?.classList.replace('ph', 'ph-fill');
+            this.showNotification('Added to wishlist');
+        }
+    }
+    
+    updateCount() {
+        const countEl = document.querySelector('.wishlist-count');
+        if (countEl) {
+            countEl.textContent = this.items.length;
+        }
+    }
+    
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'wishlist-notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }
+}
+
+// Initialize wishlist on page load
+document.addEventListener('DOMContentLoaded', () => {
+    window.wishlist = new Wishlist();
+});
+</script>
+
+<style>
+.wishlist-notification {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1D1E25;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 10000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.wishlist-notification.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+[data-wishlist-btn] {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+[data-wishlist-btn].active {
+    color: #dc2626;
+}
+
+[data-wishlist-btn]:hover {
+    transform: scale(1.1);
+}
+</style>

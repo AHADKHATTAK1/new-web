@@ -1,0 +1,360 @@
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="flash-deals section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    
+    {%- comment -%} Section Header {%- endcomment -%}
+    <div class="flash-deals__header flex-between flex-wrap gap-16 mb-32">
+      <div class="flash-deals__header-left">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="flash-deals__heading {{ section.settings.heading_size }} mb-8">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+        
+        {%- if section.settings.description != blank -%}
+          <p class="flash-deals__description text-neutral-500">
+            {{ section.settings.description }}
+          </p>
+        {%- endif -%}
+      </div>
+      
+      {%- if section.settings.show_countdown -%}
+        <div class="flash-deals__countdown">
+          <div class="countdown-timer d-flex gap-8" 
+               data-countdown="{{ section.settings.countdown_end_date }}"
+               data-labels='{"days":"Days","hours":"Hours","minutes":"Mins","seconds":"Secs"}'>
+            
+            <div class="countdown-item bg-main-600 text-white px-16 py-12 rounded-8 text-center">
+              <div class="countdown-number text-2xl fw-bold days">00</div>
+              <div class="countdown-label text-xs mt-4">Days</div>
+            </div>
+            
+            <div class="countdown-separator text-2xl fw-bold align-self-center">:</div>
+            
+            <div class="countdown-item bg-main-600 text-white px-16 py-12 rounded-8 text-center">
+              <div class="countdown-number text-2xl fw-bold hours">00</div>
+              <div class="countdown-label text-xs mt-4">Hours</div>
+            </div>
+            
+            <div class="countdown-separator text-2xl fw-bold align-self-center">:</div>
+            
+            <div class="countdown-item bg-main-600 text-white px-16 py-12 rounded-8 text-center">
+              <div class="countdown-number text-2xl fw-bold minutes">00</div>
+              <div class="countdown-label text-xs mt-4">Mins</div>
+            </div>
+            
+            <div class="countdown-separator text-2xl fw-bold align-self-center">:</div>
+            
+            <div class="countdown-item bg-main-600 text-white px-16 py-12 rounded-8 text-center">
+              <div class="countdown-number text-2xl fw-bold seconds">00</div>
+              <div class="countdown-label text-xs mt-4">Secs</div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+      
+      {%- if section.settings.show_view_all and section.settings.collection != blank -%}
+        <a href="{{ section.settings.collection.url }}" 
+           class="btn btn-outline-main-600 py-12 px-24 rounded-pill fw-medium">
+          {{ section.settings.button_label | default: 'View All Deals' }}
+          <i class="ph ph-arrow-right ms-8"></i>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Products Grid {%- endcomment -%}
+    {%- if section.settings.collection != blank -%}
+      <div class="flash-deals__products">
+        <div class="grid grid--{{ section.settings.columns_mobile }}-col grid--{{ section.settings.columns_desktop }}-col-desktop">
+          {%- liquid
+            assign collection = section.settings.collection
+            assign products_to_show = section.settings.products_to_show
+          -%}
+          
+          {%- for product in collection.products limit: products_to_show -%}
+            <div class="grid__item">
+              {%- render 'product-card-advanced', 
+                  card_product: product, 
+                  show_vendor: section.settings.show_vendor -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- else -%}
+      <div class="flash-deals__placeholder text-center py-64">
+        <p class="text-neutral-500">{{ 'sections.flash_deals.no_collection' | t | default: 'Please select a collection for flash deals' }}</p>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+  .flash-deals__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .countdown-timer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .countdown-item {
+    min-width: 70px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  .countdown-separator {
+    animation: blink 1s ease-in-out infinite;
+  }
+  
+  @keyframes blink {
+    0%, 49%, 100% {
+      opacity: 1;
+    }
+    50%, 99% {
+      opacity: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .flash-deals__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .countdown-item {
+      min-width: 60px;
+      padding: 8px 12px;
+    }
+    
+    .countdown-number {
+      font-size: 1.25rem;
+    }
+    
+    .countdown-label {
+      font-size: 10px;
+    }
+  }
+</style>
+
+<script>
+  class CountdownTimer {
+    constructor(element) {
+      this.element = element;
+      this.endDate = new Date(element.dataset.countdown).getTime();
+      this.labels = JSON.parse(element.dataset.labels || '{}');
+      this.interval = null;
+      
+      this.init();
+    }
+    
+    init() {
+      this.updateCountdown();
+      this.interval = setInterval(() => this.updateCountdown(), 1000);
+    }
+    
+    updateCountdown() {
+      const now = new Date().getTime();
+      const distance = this.endDate - now;
+      
+      if (distance < 0) {
+        clearInterval(this.interval);
+        this.element.innerHTML = '<div class="text-center fw-bold">Sale Ended!</div>';
+        return;
+      }
+      
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      this.element.querySelector('.days').textContent = String(days).padStart(2, '0');
+      this.element.querySelector('.hours').textContent = String(hours).padStart(2, '0');
+      this.element.querySelector('.minutes').textContent = String(minutes).padStart(2, '0');
+      this.element.querySelector('.seconds').textContent = String(seconds).padStart(2, '0');
+    }
+  }
+  
+  // Initialize all countdown timers
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-countdown]').forEach(timer => {
+      new CountdownTimer(timer);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Flash Deals",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "⚡ Flash Deals Today"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h3",
+          "label": "Small"
+        },
+        {
+          "value": "h2",
+          "label": "Medium"
+        },
+        {
+          "value": "h1",
+          "label": "Large"
+        }
+      ],
+      "default": "h2",
+      "label": "Heading size"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Don't miss out on today's amazing deals"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 25,
+      "step": 1,
+      "default": 8,
+      "label": "Maximum products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "1",
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "default": true,
+      "label": "Show countdown timer"
+    },
+    {
+      "type": "text",
+      "id": "countdown_end_date",
+      "label": "Countdown end date",
+      "info": "Format: YYYY-MM-DD HH:MM (e.g., 2024-12-31 23:59)",
+      "default": "2024-12-31 23:59"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show 'View all' button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "View All Deals",
+      "label": "Button label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flash Deals",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

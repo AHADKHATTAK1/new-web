@@ -1,0 +1,548 @@
+{
+  "sections": {
+    "hero-banner": {
+      "type": "image-banner",
+      "settings": {
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "stack_images_on_mobile": true,
+        "adapt_height_first_image": false
+      },
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Welcome to Our Store",
+            "heading_size": "h0"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Discover amazing products at unbeatable prices",
+            "text_style": "body"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop Now",
+            "button_link_1": "/collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "Learn More",
+            "button_link_2": "/pages/about",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ]
+    },
+    "trust-badges": {
+      "type": "trust-badges",
+      "blocks": {
+        "badge-1": {
+          "type": "badge",
+          "settings": {
+            "icon": "🚚",
+            "heading": "Free Shipping",
+            "text": "On orders over $50"
+          }
+        },
+        "badge-2": {
+          "type": "badge",
+          "settings": {
+            "icon": "🔒",
+            "heading": "Secure Payment",
+            "text": "100% secure transactions"
+          }
+        },
+        "badge-3": {
+          "type": "badge",
+          "settings": {
+            "icon": "↩️",
+            "heading": "Easy Returns",
+            "text": "30-day return policy"
+          }
+        },
+        "badge-4": {
+          "type": "badge",
+          "settings": {
+            "icon": "⭐",
+            "heading": "Top Quality",
+            "text": "Premium products only"
+          }
+        }
+      },
+      "block_order": [
+        "badge-1",
+        "badge-2",
+        "badge-3",
+        "badge-4"
+      ],
+      "settings": {
+        "heading": "Why Shop With Us",
+        "heading_size": "h1",
+        "color_scheme": "scheme-2",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "flash-deals": {
+      "type": "flash-deals",
+      "settings": {
+        "heading": "⚡ Flash Deals - Limited Time!",
+        "description": "Hurry! These deals won't last long",
+        "collection": "",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "enable_countdown": true,
+        "countdown_end_date": "2026-01-31",
+        "countdown_end_time": "23:59",
+        "show_view_all": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "top-selling": {
+      "type": "top-selling-products",
+      "settings": {
+        "heading": "Top Selling Products",
+        "show_featured_promo": true,
+        "promo_title": "Summer Sale",
+        "promo_subtitle": "Up to 50% Off",
+        "promo_link": "/collections/all"
+      }
+    },
+    "promotional-banners": {
+      "type": "promotional-banners",
+      "blocks": {
+        "promo-1": {
+          "type": "promo_item",
+          "settings": {
+            "badge": "New Arrival",
+            "title": "Latest Collection 2026",
+            "text": "Discover the newest trends",
+            "button_label": "Shop Now",
+            "button_link": "/collections/new-arrivals",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "promo-2": {
+          "type": "promo_item",
+          "settings": {
+            "badge": "Best Seller",
+            "title": "Customer Favorites",
+            "text": "Most loved products",
+            "button_label": "View All",
+            "button_link": "/collections/bestsellers",
+            "color_scheme": "scheme-2"
+          }
+        },
+        "promo-3": {
+          "type": "promo_item",
+          "settings": {
+            "badge": "Sale",
+            "title": "Special Offers",
+            "text": "Up to 50% off",
+            "button_label": "Get Deal",
+            "button_link": "/collections/sale",
+            "color_scheme": "scheme-1"
+          }
+        }
+      },
+      "block_order": [
+        "promo-1",
+        "promo-2",
+        "promo-3"
+      ],
+      "settings": {
+        "title": "Shop by Category",
+        "heading_size": "h1",
+        "columns_desktop": 3,
+        "columns_mobile": 1,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "trending": {
+      "type": "trending-products",
+      "settings": {
+        "heading": "Trending Products",
+        "show_featured_banner": true,
+        "banner_text": "Exclusive Deals On Top Brands"
+      },
+      "blocks": {
+        "tab-1": {
+          "type": "category_tab",
+          "settings": {
+            "tab_title": "All"
+          }
+        },
+        "tab-2": {
+          "type": "category_tab",
+          "settings": {
+            "tab_title": "Mobiles"
+          }
+        },
+        "tab-3": {
+          "type": "category_tab",
+          "settings": {
+            "tab_title": "Accessories"
+          }
+        }
+      },
+      "block_order": [
+        "tab-1",
+        "tab-2",
+        "tab-3"
+      ]
+    },
+    "product-tabs": {
+      "type": "product-tabs",
+      "settings": {
+        "heading": "Our Products",
+        "collection_1": "",
+        "collection_2": "",
+        "collection_3": "",
+        "tab_label_1": "New Arrivals",
+        "tab_label_2": "Best Sellers",
+        "tab_label_3": "On Sale",
+        "limit": 8,
+        "columns": 4,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Featured Products",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "settings": {
+        "title": "Shop by Collection",
+        "heading_size": "h1",
+        "layout_type": "grid",
+        "columns": 4,
+        "mobile_columns": "2",
+        "show_view_all": true,
+        "color_scheme": "scheme-2",
+        "section_width": "page-width",
+        "gap": 12,
+        "padding-block-start": 20,
+        "padding-block-end": 20
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "column-1": {
+          "type": "column",
+          "settings": {
+            "title": "Premium Quality",
+            "text": "<p>All our products are carefully selected for superior quality and durability.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column-2": {
+          "type": "column",
+          "settings": {
+            "title": "Fast Delivery",
+            "text": "<p>Get your orders delivered quickly with our express shipping options.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column-3": {
+          "type": "column",
+          "settings": {
+            "title": "Expert Support",
+            "text": "<p>Our customer service team is here to help you with any questions.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column-1",
+        "column-2",
+        "column-3"
+      ],
+      "settings": {
+        "title": "Why Choose Us",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "text": "This is the best online store I've ever shopped from! Amazing quality and super fast shipping. Will definitely order again!",
+            "rating": 5,
+            "author_name": "Sarah Johnson",
+            "author_title": "Verified Buyer - New York"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "text": "Excellent customer service and great products. The quality exceeded my expectations. Highly recommended!",
+            "rating": 5,
+            "author_name": "Michael Chen",
+            "author_title": "Verified Buyer - California"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "text": "Love the variety and the prices! Found exactly what I was looking for. Thank you for the wonderful experience!",
+            "rating": 5,
+            "author_name": "Emma Davis",
+            "author_title": "Verified Buyer - Texas"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial-1",
+        "testimonial-2",
+        "testimonial-3"
+      ],
+      "settings": {
+        "heading": "What Our Customers Say",
+        "subheading": "⭐ Over 10,000+ Happy Customers",
+        "heading_size": "h1",
+        "columns_desktop": 3,
+        "color_scheme": "scheme-2",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "brand-carousel": {
+      "type": "brand-carousel",
+      "blocks": {
+        "brand-1": {
+          "type": "brand",
+          "settings": {
+            "link": ""
+          }
+        },
+        "brand-2": {
+          "type": "brand",
+          "settings": {
+            "link": ""
+          }
+        },
+        "brand-3": {
+          "type": "brand",
+          "settings": {
+            "link": ""
+          }
+        },
+        "brand-4": {
+          "type": "brand",
+          "settings": {
+            "link": ""
+          }
+        },
+        "brand-5": {
+          "type": "brand",
+          "settings": {
+            "link": ""
+          }
+        },
+        "brand-6": {
+          "type": "brand",
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand-1",
+        "brand-2",
+        "brand-3",
+        "brand-4",
+        "brand-5",
+        "brand-6"
+      ],
+      "settings": {
+        "heading": "Trusted by Leading Brands",
+        "heading_size": "h1",
+        "color_scheme": "scheme-2",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      },
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "💌 Join Our VIP Club",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Subscribe now and get <strong>10% OFF</strong> your first order! Plus exclusive deals, new arrivals, and special offers delivered to your inbox.</p>"
+          }
+        },
+        "email_form": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "paragraph",
+        "email_form"
+      ]
+    },
+    "instagram-feed": {
+      "type": "instagram-feed",
+      "blocks": {
+        "insta-1": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "insta-2": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "insta-3": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "insta-4": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "insta-5": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "insta-6": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "insta-7": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "insta-8": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "insta-1",
+        "insta-2",
+        "insta-3",
+        "insta-4",
+        "insta-5",
+        "insta-6",
+        "insta-7",
+        "insta-8"
+      ],
+      "settings": {
+        "heading": "Follow Us on Instagram",
+        "subheading": "@yourstorename - Tag us in your photos!",
+        "heading_size": "h1",
+        "instagram_handle": "yourstorename",
+        "columns_desktop": 4,
+        "grid_gap": 16,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "hero-banner",
+    "trust-badges",
+    "flash-deals",
+    "top-selling",
+    "promotional-banners",
+    "trending",
+    "product-tabs",
+    "featured-collection",
+    "collection-list",
+    "multicolumn",
+    "testimonials",
+    "brand-carousel",
+    "newsletter",
+    "instagram-feed"
+  ]
+}

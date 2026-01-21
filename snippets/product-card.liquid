@@ -1,0 +1,66 @@
+<!-- Product Card -->
+<div class="product-card h-100 p-16 border border-gray-100 hover-border-main-600 rounded-16 position-relative transition-2">
+    <a href="{{ product.url }}" class="product-card__thumb flex-center rounded-8 bg-gray-50 position-relative">
+        {% if product.featured_image %}
+            <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title | escape }}" class="w-auto max-w-unset" loading="lazy">
+        {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'w-auto max-w-unset' }}
+        {% endif %}
+        
+        {% if product.compare_at_price > product.price %}
+            <span class="product-card__badge bg-danger-600 px-8 py-4 text-sm text-white position-absolute inset-inline-start-0 inset-block-start-0">
+                Sale {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%
+            </span>
+        {% endif %}
+    </a>
+    
+    <div class="product-card__content mt-16">
+        {% if product.compare_at_price > product.price %}
+            <span class="text-success-600 bg-success-50 text-sm fw-medium py-4 px-8">
+                {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% OFF
+            </span>
+        {% endif %}
+        
+        <h6 class="title text-lg fw-semibold my-16">
+            <a href="{{ product.url }}" class="link text-line-2">{{ product.title }}</a>
+        </h6>
+        
+        {% if product.metafields.reviews.rating.value %}
+        <div class="flex-align gap-6">
+            <div class="flex-align gap-2">
+                {% assign rating = product.metafields.reviews.rating.value | round %}
+                {% for i in (1..5) %}
+                    <span class="text-xs fw-medium {% if i <= rating %}text-warning-600{% else %}text-gray-300{% endif %} d-flex">
+                        <i class="ph-fill ph-star"></i>
+                    </span>
+                {% endfor %}
+            </div>
+            <span class="text-xs fw-medium text-gray-500">{{ product.metafields.reviews.rating.value }}</span>
+            <span class="text-xs fw-medium text-gray-500">({{ product.metafields.reviews.rating_count.value | default: 0 }})</span>
+        </div>
+        {% endif %}
+
+        <div class="product-card__price my-20">
+            {% if product.compare_at_price > product.price %}
+                <span class="text-gray-400 text-md fw-semibold text-decoration-line-through">
+                    {{ product.compare_at_price | money }}
+                </span>
+            {% endif %}
+            <span class="text-heading text-md fw-semibold">
+                {{ product.price | money }}
+                <span class="text-gray-500 fw-normal">/{{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit | default: 'ea' }}</span>
+            </span>
+        </div>
+
+        <form action="{{ routes.cart_add_url }}" method="post" class="product-form">
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" name="add" class="product-card__cart btn bg-gray-50 text-heading hover-bg-main-600 hover-text-white py-11 px-24 rounded-pill flex-center gap-8 fw-medium w-100" {% unless product.available %}disabled{% endunless %}>
+                {% if product.available %}
+                    Add To Cart <i class="ph ph-shopping-cart"></i>
+                {% else %}
+                    Sold Out
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</div>

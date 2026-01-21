@@ -1,0 +1,32 @@
+<div class="card-wrapper product-card-wrapper underline-links-hover" style="border: 1px solid rgba(var(--color-foreground-rgb), 0.1); border-radius: 8px; padding: 15px; background: rgba(var(--color-foreground-rgb), 0.02);">
+  <div class="card card--card card--media" style="overflow: hidden;">
+    
+    <!-- Skeleton Image -->
+    <div class="card__inner" style="background: rgba(var(--color-foreground-rgb), 0.08); aspect-ratio: 1/1; border-radius: 8px; animation: skeleton-loading 1.5s ease-in-out infinite;"></div>
+    
+    <!-- Skeleton Content -->
+    <div class="card__content" style="margin-top: 15px;">
+      <div class="card__information" style="text-align: center;">
+        <!-- Skeleton Title -->
+        <div style="height: 16px; background: rgba(var(--color-foreground-rgb), 0.08); border-radius: 4px; margin-bottom: 10px; animation: skeleton-loading 1.5s ease-in-out infinite;"></div>
+        
+        <!-- Skeleton Price -->
+        <div style="height: 20px; background: rgba(var(--color-foreground-rgb), 0.08); border-radius: 4px; width: 60%; margin: 10px auto; animation: skeleton-loading 1.5s ease-in-out infinite;"></div>
+        
+        <!-- Skeleton Button -->
+        <div style="height: 40px; background: rgba(var(--color-foreground-rgb), 0.08); border-radius: 24px; margin-top: 15px; animation: skeleton-loading 1.5s ease-in-out infinite;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes skeleton-loading {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+</style>

@@ -1,0 +1,99 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "accessibility": {
+      "skip_to_text": "Skip to content",
+      "close": "Close",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "breadcrumbs": {
+      "home": "Home"
+    },
+    "search": {
+      "placeholder": "Search for products...",
+      "submit": "Search"
+    }
+  },
+  "products": {
+    "product": {
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "add_to_cart": "Add to Cart",
+      "view_details": "View Details",
+      "quantity": "Quantity",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "sku": "SKU",
+      "vendor": "Vendor"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue Shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "quantity": "Quantity"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "My Account",
+      "login": "Login",
+      "logout": "Logout",
+      "register": "Register",
+      "orders": "Orders",
+      "addresses": "Addresses"
+    },
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot your password?",
+      "sign_in": "Sign In",
+      "guest_title": "Continue as a guest"
+    },
+    "register": {
+      "title": "Create Account",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create"
+    }
+  },
+  "settings_schema": {
+    "colors": {
+      "name": "Color Schemes",
+      "settings": {
+        "background": {
+          "label": "Background"
+        },
+        "background_gradient": {
+          "label": "Background Gradient"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_background": {
+          "label": "Button Background"
+        },
+        "button_label": {
+          "label": "Button Label"
+        },
+        "secondary_button_label": {
+          "label": "Secondary Button Label"
+        },
+        "shadow": {
+          "label": "Shadow"
+        }
+      }
+    }
+  }
+}

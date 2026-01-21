@@ -1,0 +1,18 @@
+<!-- Nav Menu Start -->
+<ul class="nav-menu flex-align">
+    {% for link in linklists.main-menu.links %}
+    <li class="on-hover-item nav-menu__item {% if link.links != blank %}has-submenu{% endif %} {% if link.active %}activePage{% endif %}">
+        <a href="{{ link.url }}" class="nav-menu__link text-heading-two">{{ link.title }}</a>
+        {% if link.links != blank %}
+        <ul class="on-hover-dropdown common-dropdown nav-submenu scroll-sm">
+            {% for childlink in link.links %}
+            <li class="common-dropdown__item nav-submenu__item {% if childlink.active %}activePage{% endif %}">
+                <a href="{{ childlink.url }}" class="common-dropdown__link nav-submenu__link text-heading-two hover-bg-neutral-100">{{ childlink.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+<!-- Nav Menu End -->

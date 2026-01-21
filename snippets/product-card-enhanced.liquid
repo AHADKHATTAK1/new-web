@@ -1,0 +1,175 @@
+<!-- Enhanced Product Card with Quick Actions -->
+<div class="product-card-enhanced h-100 p-16 border border-gray-100 hover-border-main-600 rounded-16 position-relative transition-2">
+    <!-- Quick Actions -->
+    <div class="product-card__actions position-absolute top-0 end-0 m-12 d-flex flex-column gap-8 z-2">
+        <button type="button" 
+                class="quick-action-btn bg-white border-0 rounded-circle w-40 h-40 flex-center shadow-sm" 
+                data-wishlist-btn 
+                data-product-id="{{ product.id }}"
+                title="Add to Wishlist">
+            <i class="ph ph-heart text-lg"></i>
+        </button>
+        <button type="button" 
+                class="quick-action-btn bg-white border-0 rounded-circle w-40 h-40 flex-center shadow-sm" 
+                data-quickview-btn 
+                data-product-handle="{{ product.handle }}"
+                title="Quick View">
+            <i class="ph ph-eye text-lg"></i>
+        </button>
+        <button type="button" 
+                class="quick-action-btn bg-white border-0 rounded-circle w-40 h-40 flex-center shadow-sm" 
+                data-compare-btn 
+                data-product-id="{{ product.id }}"
+                title="Add to Compare">
+            <i class="ph ph-recycle text-lg"></i>
+        </button>
+    </div>
+
+    <a href="{{ product.url }}" class="product-card__thumb flex-center rounded-8 bg-gray-50 position-relative">
+        {% if product.featured_image %}
+            <img src="{{ product.featured_image | image_url: width: 300 }}" 
+                 alt="{{ product.title | escape }}" 
+                 class="w-auto max-w-unset product-card__image-main" 
+                 loading="lazy">
+            
+            {% if product.images[1] %}
+                <img src="{{ product.images[1] | image_url: width: 300 }}" 
+                     alt="{{ product.title | escape }}" 
+                     class="w-auto max-w-unset product-card__image-hover position-absolute" 
+                     loading="lazy">
+            {% endif %}
+        {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'w-auto max-w-unset' }}
+        {% endif %}
+        
+        {% if product.compare_at_price > product.price %}
+            <span class="product-card__badge bg-danger-600 px-8 py-4 text-sm text-white position-absolute inset-inline-start-0 inset-block-start-0">
+                Sale -{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%
+            </span>
+        {% elsif product.available == false %}
+            <span class="product-card__badge bg-neutral-600 px-8 py-4 text-sm text-white position-absolute inset-inline-start-0 inset-block-start-0">
+                Sold Out
+            </span>
+        {% endif %}
+    </a>
+    
+    <div class="product-card__content mt-16">
+        {% if product.vendor %}
+            <span class="text-xs text-gray-500 d-block mb-8">{{ product.vendor }}</span>
+        {% endif %}
+        
+        <h6 class="title text-lg fw-semibold my-12">
+            <a href="{{ product.url }}" class="link text-line-2">{{ product.title }}</a>
+        </h6>
+        
+        {% if product.metafields.reviews.rating.value %}
+        <div class="flex-align gap-6 mb-12">
+            <div class="flex-align gap-2">
+                {% assign rating = product.metafields.reviews.rating.value | round %}
+                {% for i in (1..5) %}
+                    <span class="text-xs fw-medium {% if i <= rating %}text-warning-600{% else %}text-gray-300{% endif %} d-flex">
+                        <i class="ph-fill ph-star"></i>
+                    </span>
+                {% endfor %}
+            </div>
+            <span class="text-xs fw-medium text-gray-500">({{ product.metafields.reviews.rating_count.value | default: 0 }})</span>
+        </div>
+        {% endif %}
+
+        <div class="product-card__price my-12">
+            {% if product.compare_at_price > product.price %}
+                <span class="text-gray-400 text-md fw-semibold text-decoration-line-through me-8">
+                    {{ product.compare_at_price | money }}
+                </span>
+            {% endif %}
+            <span class="text-heading text-md fw-semibold">
+                {{ product.price | money }}
+            </span>
+        </div>
+
+        <button type="button" 
+                class="product-card__cart btn bg-main-600 text-white hover-bg-main-700 py-11 px-24 rounded-pill flex-center gap-8 fw-medium w-100 quick-add-btn" 
+                data-product-id="{{ product.selected_or_first_available_variant.id }}"
+                {% unless product.available %}disabled{% endunless %}>
+            {% if product.available %}
+                <i class="ph ph-shopping-cart"></i> Quick Add
+            {% else %}
+                Sold Out
+            {% endif %}
+        </button>
+    </div>
+</div>
+
+<style>
+.product-card-enhanced {
+    overflow: hidden;
+}
+
+.product-card__actions {
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+}
+
+.product-card-enhanced:hover .product-card__actions {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.quick-action-btn {
+    transition: all 0.3s ease;
+}
+
+.quick-action-btn:hover {
+    transform: scale(1.1);
+    color: var(--color-main-600, #0989FF);
+}
+
+.product-card__image-hover {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card-enhanced:hover .product-card__image-hover {
+    opacity: 1;
+}
+
+.quick-add-btn {
+    transition: all 0.3s ease;
+}
+
+.quick-add-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(9, 137, 255, 0.3);
+}
+</style>
+
+<script>
+// Quick add to cart
+document.querySelectorAll('.quick-add-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const variantId = this.dataset.productId;
+        
+        fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: variantId, quantity: 1 })
+        })
+        .then(res => res.json())
+        .then(() => {
+            // Open cart drawer
+            document.getElementById('cart-drawer')?.classList.add('active');
+            // Update cart count
+            fetch('/cart.js')
+                .then(r => r.json())
+                .then(cart => {
+                    document.querySelectorAll('[data-cart-count]').forEach(el => {
+                        el.textContent = cart.item_count;
+                    });
+                });
+        })
+        .catch(err => console.error('Error adding to cart:', err));
+    });
+});
+</script>

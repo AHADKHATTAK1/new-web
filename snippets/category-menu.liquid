@@ -1,0 +1,46 @@
+<!-- Category Dropdown Start -->
+<div class="category-two h-100 d-block flex-shrink-0">
+    <button type="button" class="category__button flex-align gap-8 fw-medium bg-main-two-600 py-16 px-20 text-white h-100 md-rounded-top">
+        <span class="icon text-2xl d-md-flex d-none"><i class="ph ph-squares-four"></i></span>
+        <span class="d-lg-flex d-none">All</span> Categories
+        <span class="arrow-icon text-md d-flex ms-auto"><i class="ph ph-caret-down"></i></span>
+    </button>
+
+    <div class="responsive-dropdown common-dropdown d-lg-none d-block nav-submenu p-0 submenus-submenu-wrapper shadow-none border border-gray-100">
+        <button type="button" class="close-responsive-dropdown rounded-circle text-xl position-absolute inset-inline-end-0 inset-block-start-0 mt-4 me-8 d-lg-none d-flex"> 
+            <i class="ph ph-x"></i> 
+        </button>
+
+        <div class="logo px-16 d-lg-none d-block">
+            <a href="/" class="link">
+                {{ shop.name }}
+            </a>
+        </div>
+
+        <ul class="scroll-sm p-0 py-8 overflow-y-auto">
+            {% for link in linklists.categories.links %}
+            <li class="has-submenus-submenu">
+                <a href="{{ link.url }}" class="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0">
+                    <span>{{ link.title }}</span>
+                    {% if link.links != blank %}
+                    <span class="icon text-md d-flex ms-auto"><i class="ph ph-caret-right"></i></span>
+                    {% endif %}
+                </a>
+
+                {% if link.links != blank %}
+                <div class="submenus-submenu py-16">
+                    <h6 class="text-lg px-16 submenus-submenu__title">{{ link.title }}</h6>
+                    <ul class="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
+                        {% for childlink in link.links %}
+                        <li>
+                            <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div> 

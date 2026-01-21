@@ -26,7 +26,7 @@
     $('.has-submenu').on('click', function () {
       var thisItem = $(this);
 
-      if (windowWidth < 992) {
+      if ($(window).width() < 992) {
         if (thisItem.hasClass('active')) {
           thisItem.removeClass('active')
         } else {
@@ -45,20 +45,22 @@
 
     // ===================== Scroll Back to Top Js Start ======================
     var progressPath = document.querySelector('.progress-wrap path');
-    var pathLength = progressPath.getTotalLength();
-    progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
-    progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
-    progressPath.style.strokeDashoffset = pathLength;
-    progressPath.getBoundingClientRect();
-    progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
-    var updateProgress = function () {
-      var scroll = $(window).scrollTop();
-      var height = $(document).height() - $(window).height();
-      var progress = pathLength - (scroll * pathLength / height);
-      progressPath.style.strokeDashoffset = progress;
+    if (progressPath) {
+      var pathLength = progressPath.getTotalLength();
+      progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+      progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+      progressPath.style.strokeDashoffset = pathLength;
+      progressPath.getBoundingClientRect();
+      progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+      var updateProgress = function () {
+        var scroll = $(window).scrollTop();
+        var height = $(document).height() - $(window).height();
+        var progress = pathLength - (scroll * pathLength / height);
+        progressPath.style.strokeDashoffset = progress;
+      }
+      updateProgress();
+      $(window).scroll(updateProgress);
     }
-    updateProgress();
-    $(window).scroll(updateProgress);
     var offset = 50;
     var duration = 550;
     jQuery(window).on('scroll', function () {
@@ -112,7 +114,7 @@
 
     // ========================== Select2 Js Start =================================
     $(document).ready(function () {
-      $('.js-example-basic-single').select2();
+      if ($.fn.select2) { $('.js-example-basic-single').select2(); }
     });
     // ========================== Select2 Js End =================================
 
@@ -229,7 +231,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#product-one-next',
       prevArrow: '#product-one-prev',
@@ -237,43 +238,21 @@
         {
           breakpoint: 1400,
           settings: {
-            slidesToShow: 5,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1300,
-          settings: {
-            slidesToShow: 5,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1199,
-          settings: {
-            slidesToShow: 4,
-            arrows: false,
           }
         },
         {
-          breakpoint: 991,
-          settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
       ]
@@ -293,7 +272,6 @@
       fade: true,
       cssEase: 'linear',
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#banner-three-next',
       prevArrow: '#banner-three-prev',
@@ -312,7 +290,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#feature-item-wrapper-next',
       prevArrow: '#feature-item-wrapper-prev',
@@ -320,49 +297,27 @@
         {
           breakpoint: 1699,
           settings: {
-            slidesToShow: 9,
           }
         },
         {
-          breakpoint: 1599,
-          settings: {
-            slidesToShow: 8,
           }
         },
         {
-          breakpoint: 1399,
-          settings: {
-            slidesToShow: 6,
           }
         },
         {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 5,
           }
         },
         {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 4,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 3,
           }
         },
         {
-          breakpoint: 424,
-          settings: {
-            slidesToShow: 2,
           }
         },
         {
-          breakpoint: 359,
-          settings: {
-            slidesToShow: 1,
           }
         },
       ]
@@ -381,7 +336,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#feature-item-wrapper-next',
       prevArrow: '#feature-item-wrapper-prev',
@@ -389,43 +343,24 @@
         {
           breakpoint: 1599,
           settings: {
-            slidesToShow: 5,
           }
         },
         {
-          breakpoint: 1399,
-          settings: {
-            slidesToShow: 4,
           }
         },
         {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 3,
           }
         },
         {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 3,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 2,
           }
         },
         {
-          breakpoint: 424,
-          settings: {
-            slidesToShow: 2,
           }
         },
         {
-          breakpoint: 359,
-          settings: {
-            slidesToShow: 1,
           }
         },
       ]
@@ -445,7 +380,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       fade: true,
       cssEase: 'linear',
@@ -455,7 +389,6 @@
         {
           breakpoint: 767,
           settings: {
-            slidesToShow: 1,
           }
         }
       ]
@@ -475,7 +408,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#flash-next',
       prevArrow: '#flash-prev',
@@ -483,8 +415,6 @@
         {
           breakpoint: 991,
           settings: {
-            slidesToShow: 1,
-            arrows: false,
           }
         }
       ]
@@ -503,7 +433,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#deals-next',
       prevArrow: '#deals-prev',
@@ -511,22 +440,12 @@
         {
           breakpoint: 1399,
           settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1199,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 1,
-            arrows: false,
           }
         },
       ]
@@ -546,7 +465,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#deal-week-next',
       prevArrow: '#deal-week-prev',
@@ -554,29 +472,15 @@
         {
           breakpoint: 1599,
           settings: {
-            slidesToShow: 5,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1399,
-          settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1199,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 1,
-            arrows: false,
           }
         },
       ]
@@ -600,7 +504,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#organic-next',
       prevArrow: '#organic-prev',
@@ -608,36 +511,18 @@
         {
           breakpoint: 1599,
           settings: {
-            slidesToShow: 6,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1399,
-          settings: {
-            slidesToShow: 4,
-            arrows: false,
           }
         },
         {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
         {
-          breakpoint: 424,
-          settings: {
-            slidesToShow: 1,
-            arrows: false,
           }
         },
       ]
@@ -657,7 +542,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#new-arrival-next',
       prevArrow: '#new-arrival-prev',
@@ -665,36 +549,18 @@
         {
           breakpoint: 1599,
           settings: {
-            slidesToShow: 6,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1399,
-          settings: {
-            slidesToShow: 4,
-            arrows: false,
           }
         },
         {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
         {
-          breakpoint: 424,
-          settings: {
-            slidesToShow: 1,
-            arrows: false,
           }
         },
       ]
@@ -714,7 +580,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       prevArrow: '<button type="button" class="slick-prev border border-gray-100 w-30 h-30 bg-transparent rounded-pill position-absolute hover-bg-main-600 hover-text-white hover-border-main-600 transition-1"><i class="ph ph-caret-left"></i></button>',
       nextArrow: '<button type="button" class="slick-next border border-gray-100 w-30 h-30 bg-transparent rounded-pill position-absolute hover-bg-main-600 hover-text-white hover-border-main-600 transition-1"><i class="ph ph-caret-right"></i></button>',
@@ -758,7 +623,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#brand-next',
       prevArrow: '#brand-prev',
@@ -766,43 +630,21 @@
         {
           breakpoint: 1599,
           settings: {
-            slidesToShow: 7,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1399,
-          settings: {
-            slidesToShow: 6,
-            arrows: false,
           }
         },
         {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 5,
-            arrows: false,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 4,
-            arrows: false,
           }
         },
         {
-          breakpoint: 424,
-          settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 359,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
       ]
@@ -830,7 +672,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#featured-products-next',
       prevArrow: '#featured-products-prev',
@@ -838,8 +679,6 @@
         {
           breakpoint: 991,
           settings: {
-            slidesToShow: 1,
-            arrows: false,
           }
         }
       ]
@@ -859,7 +698,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#recommended-next',
       prevArrow: '#recommended-prev',
@@ -867,22 +705,12 @@
         {
           breakpoint: 1399,
           settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1199,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 1,
-            arrows: false,
           }
         },
       ]
@@ -901,7 +729,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#vendor-next',
       prevArrow: '#vendor-prev',
@@ -921,7 +748,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#topBrand-next',
       prevArrow: '#topBrand-prev',
@@ -929,43 +755,21 @@
         {
           breakpoint: 1599,
           settings: {
-            slidesToShow: 7,
-            arrows: false,
           }
         },
         {
-          breakpoint: 1399,
-          settings: {
-            slidesToShow: 6,
-            arrows: false,
           }
         },
         {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 5,
-            arrows: false,
           }
         },
         {
-          breakpoint: 575,
-          settings: {
-            slidesToShow: 4,
-            arrows: false,
           }
         },
         {
-          breakpoint: 424,
-          settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 359,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
       ]
@@ -1184,7 +988,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#instagram-next',
       prevArrow: '#instagram-prev',
@@ -1192,29 +995,15 @@
         {
           breakpoint: 1299,
           settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
         {
-          breakpoint: 424,
-          settings: {
-            slidesToShow: 1,
-            arrows: false,
           }
         },
       ]
@@ -1232,7 +1021,6 @@
       focusOnSelect: true,
       fade: true,
       cssEase: 'linear',
-      dots: false,
       arrows: false,
     });
 
@@ -1247,7 +1035,6 @@
       arrows: true,
       draggable: true,
       rtl: $('html').attr('dir') === 'rtl' ? true : false,
-      speed: 900,
       infinite: true,
       nextArrow: '#testi-next',
       prevArrow: '#testi-prev',
@@ -1256,29 +1043,15 @@
         {
           breakpoint: 1299,
           settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 3,
-            arrows: false,
           }
         },
         {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
         {
-          breakpoint: 424,
-          settings: {
-            slidesToShow: 2,
-            arrows: false,
           }
         },
       ]
@@ -1286,11 +1059,11 @@
     // ========================== Testimonials Thumbs Slider Js End =====================
 
     // ========================= Wow Js Start ===================
-    new WOW().init();
+    if (typeof WOW !== 'undefined') { new WOW().init(); }
     // ========================= Wow Js End ===================
 
     // ========================= AOS Animation Js Start ===================
-    AOS.init({
+    if (typeof AOS !== 'undefined') { AOS.init({
       offset: 40,
       duration: 1000,
       once: true,
